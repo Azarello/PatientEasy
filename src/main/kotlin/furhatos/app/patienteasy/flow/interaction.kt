@@ -30,12 +30,12 @@ val Start : State = state(Interaction) {
 val DeclareProblem : State = state {
 
     val rand = Random()
-    val num = rand.nextInt(5)
+    val num = rand.nextInt(3)
     onEntry {
         when (num) {
             0 -> goto(Vague1)
-            1 -> goto(Projection1)
-            2 -> goto(Denial1)
+            1 -> goto(Denial1)
+            2 -> goto(Projection1)
             3 -> goto(CoverWord1)
             4 -> goto(Rationalization1)
         }
@@ -48,13 +48,17 @@ var counter1 = 0
 
 val Counter1 : State = state {
 
+
+
     onEntry {
         counter1 += 1
-        if (counter1 < 3)
-            goto(DeclareProblem)
+        if (counter1 < 5) {
+            furhat.say(" Let's move on to the next defense")
+            goto(DeclareProblem) }
         else {
             furhat.say(" My problem is that I get very angry with dad at times when we talk")
-            goto(Resolution1)
+            furhat.say(" Great job! You got the patient to declare their internal problem")
+           /* goto(Resolution1) */
         }
     }
 }
@@ -139,7 +143,20 @@ val Denial1 : State = state {
         it.intent.problem
         it.intent.avoid
 
-        furhat.say("Yes that was a denial defense")
+        when (num) {
+            0 -> furhat.say("Yes. There are different kinds of denials, which all have to do with the " +
+                    "patient in one way or another denying the reality of their emotional problem.")
+            1 -> furhat.say(" Correct.One way of dealing with denial defenses is by pointing out to the " +
+                    "patient that after all they came to a therapist so there must be something going on.")
+            2 -> furhat.say("Excellent. This kind of denial is often referred to as minimization, in which the " +
+                    "patient acknowledges they have a problem but downplays its significance and impact.")
+            3 -> furhat.say("Good job. Denial can take the shape of a patient denying the stimulus of a problem, " +
+                    "such as a conflict with a parent, or by denying the emotional distress itself.")
+            4 -> furhat.say("Exactly right. In this case it is helpful to focus in on the “minor thing” to " +
+                    "see if they are denying its importance and significance in their life.  ")
+        }
+
+        furhat.say("Let's move on to the next defense")
         goto(Counter1)
     }
 
@@ -181,6 +198,19 @@ val Projection1 : State = state {
         it.intent.feel
         it.intent.notice
 
+        when (num) {
+            0 -> furhat.say("Excellent. In projection a patient may for example blame others as the cause of their " +
+                    "problem, or claim that only other people believe the patient has a problem.")
+            1 -> furhat.say("Perfect. As with other defenses, one way of blocking projection is to simply point out the" +
+                    "defense explicitly to the patient. Ask them how they think without reference to others.")
+            2 -> furhat.say(" Yes that's projection. As is shown in this example, it is not uncommon for patients " +
+                    "to project on to the therapist. The patient does not think he has a problem, only the therapist does.")
+            3 -> furhat.say("Good job. Projection can often be identified when patients make reference to other people" +
+                    "without going into their own emotional state")
+            4 -> furhat.say(" Exactly right. This example shows an example of how the patient projects his problem" +
+                    "as in fact being his fathers issue. ")
+        }
+
         furhat.say("Yes that was projection")
         goto(Counter1)
     }
@@ -191,7 +221,7 @@ val Projection1 : State = state {
     }
 
     onResponse<No> {
-        furhat.say("That was a pojection")
+        furhat.say("That was a projection")
         goto(DeclareProblem)
     }
 }

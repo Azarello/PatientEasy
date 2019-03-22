@@ -444,7 +444,8 @@ class ProjectionBlock1(val person : Person? = null, val obey : Obey? = null, val
                 " that's @person @feel and not @person @will",
                 " can @person @specify your @will instead of @person @intellect",
                 " could @person @specify your @feel instead of @person @intellect",
-                " could @person @specify your @intellect instead of @person @will")
+                " could @person @specify your @intellect instead of @person @will",
+                "Projection")
     }
 }
 
