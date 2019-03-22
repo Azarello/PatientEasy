@@ -103,7 +103,7 @@ val Vague1 : State = state {
         }
 
 
-        furhat.say("Lets go to the next defense.")
+
         goto(Counter1)
     }
 
@@ -156,7 +156,7 @@ val Denial1 : State = state {
                     "see if they are denying its importance and significance in their life.  ")
         }
 
-        furhat.say("Let's move on to the next defense")
+
         goto(Counter1)
     }
 
@@ -211,7 +211,6 @@ val Projection1 : State = state {
                     "as in fact being his fathers issue. ")
         }
 
-        furhat.say("Yes that was projection")
         goto(Counter1)
     }
 
