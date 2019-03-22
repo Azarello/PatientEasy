@@ -249,7 +249,19 @@ val CoverWord1 : State = state {
         it.intent.notice
         it.intent.specify
 
-        furhat.say("Yes that is a cover word")
+        when (num) {
+            0 -> furhat.say(" Yes this is a cover word defense. Cover words are words of weaker emotional" +
+                    "strenght than the patient is actually feeling.")
+            1 -> furhat.say(" Correct. 'Kind of annoying' is a cover word in this case. Clearly the patient" +
+                    "must be feeling something stronger since they are unlikely to seek therapy for slight annoyance.")
+            2 -> furhat.say(" Cover word is exactly right. Blocking cover words can be done by illuminating the " +
+                    "particular word to the patient and inviting them to share more of their emotions")
+            3 -> furhat.say(" Cover words can often be identified because they don't give weight enough to the" +
+                    "situation or seem contrived. The word disconcerted used in this example really sticks out.")
+            4 -> furhat.say(" Like other defenses, cover words are used to distance the patient from their" +
+                    "actual painful emotions. By inviting them to use more appropriate words they may feel more" +
+                    "comfortable exploring their feelings and vice versa.")
+        }
         goto(Counter1)
     }
 
@@ -272,8 +284,8 @@ val Rationalization1 : State = state {
     val num = rand.nextInt(5)
     onEntry {
         when (num) {
-            0 -> furhat.ask(" I think the reason for my problem stems from when I was younger")
-            1 -> furhat.ask(" If my dad just didn't bring up certain topics I wouldn't get upset")
+            0 -> furhat.ask(" If my dad just didn't bring up certain topics I wouldn't get upset")
+            1 -> furhat.ask(" I think the reason for my problem stems from when I was younger")
             2 -> furhat.ask(" I think it's because he has this strange voice that I get needlessly upset")
             3 -> furhat.ask(" It's only when I'm tired that I experience these problems so I just need to get more sleep")
             4 -> furhat.ask(" I noticed that my problem comes up whenever I'm also stressed from work so that might be a reason")
@@ -290,7 +302,19 @@ val Rationalization1 : State = state {
         it.intent.negative
         it.intent.problem
 
-        furhat.say(" Yes that was rationalization")
+        when (num) {
+            0 -> furhat.say(" Yes correct. Rationalization means the patient describes reasons for their" +
+                    "problem rather than the experience of their emotions")
+            1 -> furhat.say("Yes this is rationalization. By analyzing the underlying reasons for their " +
+                    "feeling rather than exploring the emotions directly, the patient is distancing himself from" +
+                    "the problem.")
+            2 -> furhat.say(" Excellent. Rationalization can often be identified by words like 'think', 'reason'" +
+                    " or 'because' so they are a good hint the patient is rationalizing.")
+            3 -> furhat.say(" Exactly right. Keep in mind that even if the patients analysis of the problem" +
+                    "is reasonable or correct, they are nevertheless distancing themselves from their emotions")
+            4 -> furhat.say(" Good job. In order to block rationalization, help the patient differentiate " +
+                    "their reasons from feelings and then help them explore the feelings directly")
+        }
         goto(Counter1)
     }
 
