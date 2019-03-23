@@ -57,8 +57,10 @@ val Counter1 : State = state {
             goto(DeclareProblem) }
         else {
             furhat.say(" My problem is that I get very angry with dad at times when we talk")
-            furhat.say(" Great job! You got the patient to declare their internal problem")
-           /* goto(Resolution1) */
+            furhat.say(" Great job! You got the patient to declare their internal problem which is " +
+                    "the first part of the establishing a therapeutic alliance. In the next module we will look at" +
+                    " the second part of the therapeutic process.")
+            goto(Resolution1)
         }
     }
 }
@@ -251,7 +253,7 @@ val CoverWord1 : State = state {
 
         when (num) {
             0 -> furhat.say(" Yes this is a cover word defense. Cover words are words of weaker emotional" +
-                    "strenght than the patient is actually feeling.")
+                    "import than the patient is actually feeling.")
             1 -> furhat.say(" Correct. 'Kind of annoying' is a cover word in this case. Clearly the patient" +
                     "must be feeling something stronger since they are unlikely to seek therapy for slight annoyance.")
             2 -> furhat.say(" Cover word is exactly right. Blocking cover words can be done by illuminating the " +
@@ -327,3 +329,459 @@ val Rationalization1 : State = state {
     }
 }
 
+
+val Resolution1 : State = state {
+
+    onEntry {
+        furhat.ask("The second part of establishing the therapeutic alliance involves getting the patient" +
+                "to declare their will to do therapy. It is important to keep in mind that one should never explore" +
+                "a problem unless the patient first declares their wish to work on it in a therapeutic setting. In this " +
+                "module we will look at defenses that typically prevent the patient may use to avoid expressing" +
+                "their will to do therapy. Your task is to identify and block five defenses in order to get the patient" +
+                "to declare their will to explore their problem with you. Are you ready")
+    }
+
+    onResponse<Yes> {
+        goto(DeclareWill)
+    }
+
+    onResponse<No> {
+        goto(Idle)
+    }
+}
+
+val DeclareWill : State = state {
+
+    val rand = Random()
+    val num = rand.nextInt(5)
+
+    onEntry {
+        when (num) {
+            0 -> goto(Projection2)
+            1 -> goto(HypotheticalSpeech2)
+            2 -> goto(Defiance2)
+            3 -> goto(Rumination2)
+            4 -> goto(Anxiety2)
+        }
+    }
+}
+
+
+var counter2 = 0
+
+
+val Counter2 : State = state {
+
+    onEntry {
+        counter2 += 1
+        if (counter2 < 3)
+            goto(DeclareWill)
+        else {
+            furhat.say(" Yes, I do want to work on my issues about getting angry with my father.")
+            goto(Resolution2)
+        }
+    }
+}
+val Projection2 : State = state {
+
+    val rand = Random()
+    val num = rand.nextInt(5)
+
+    onEntry {
+        when (num) {
+            0 -> furhat.ask("Well my brother thinks I should work on the problem, he's getting tired of it")
+            1 -> furhat.ask("You really seem like you want to dig deeper into these issues")
+            2 -> furhat.ask("Everyone in my family expect me to work on this problem, I guess it's hurting them")
+            3 -> furhat.ask(" My doctor wants me to work on the problem because he's worried about my health")
+            4 -> furhat.ask(" Do you think I should work on my problem?")
+        }
+    }
+
+    onResponse<ProjectionBlock2> {
+
+        it.intent.person
+        it.intent.problem
+        it.intent.avoid
+        it.intent.will
+        it.intent.force
+        it.intent.intellect
+        it.intent.obey
+        it.intent.specify
+        it.intent.feel
+        it.intent.notice
+
+        when (num) {
+            0 -> furhat.say("Yes, this is a classic example of projection in which the patient projects their" +
+                    "will to do therapy onto someone else. Their brother brother wants them to go to therapy" +
+                    "even though the patient himself does not claim to want to")
+            1 -> furhat.say("Good job. As in other cases of projection it is rather common for patients to" +
+                    "project their will to do therapy onto the therapist. One way to block this is by reminding the patient" +
+                    "that after all it was their decision to come to therapy")
+            2 -> furhat.say(" Great. When blocking projection defenses it is helpful to first make the patient aware of" +
+                    "what they are doing, and asking them about their own feelings without reference to others.")
+            3 -> furhat.say("Perfect. In this example one can identify the projection because the patient talks about" +
+                    " another person, their doctor, instead of mentioning their own emotional state")
+            4 -> furhat.say(" Excellent. An effective way of blocking projection defenses is to bypass the reference" +
+                    "to others and simply ask the patient what they want. Does the patient not want to feel better " +
+                    "for their own sake?")
+
+    }
+        goto(Counter2)
+    }
+
+    onResponse<Yes> {
+        furhat.say(" Let's try again")
+        goto(DeclareWill)
+    }
+
+    onResponse<No> {
+        furhat.say(" That was hypothetical speech")
+        goto(DeclareWill)
+    }
+}
+
+val HypotheticalSpeech2 : State = state {
+
+    val rand = Random()
+    val num = rand.nextInt(5)
+
+    onEntry {
+        when (num) {
+            0 -> furhat.ask(" I suppose digging deeper into my feelings could be of benefit")
+            1 -> furhat.ask(" Perhaps discussing my problems would help me in dealing with them")
+            2 -> furhat.ask(" I guess being in therapy could be helpful for my mental health")
+            3 -> furhat.ask(" Maybe investigating what is going on could potentially be good")
+            4 -> furhat.ask(" In theory it could conceivably improve my situation")
+        }
+    }
+
+    onResponse<HypotheticalSpeechBlock2> {
+
+        it.intent.avoid
+        it.intent.will
+        it.intent.indirect
+        it.intent.notice
+        it.intent.problem
+        it.intent.deny
+        it.intent.specify
+        it.intent.feel
+
+
+        when (num) {
+            0 -> furhat.say("Correct. Hypothetical speech may be difficult to detect since the patient does in a way" +
+                    "declare their will to do therapy, only they do it in theory without really committing. It is important" +
+                    "that the patient decisively makes a stand that they want to work on their problem.")
+            1 -> furhat.say("That's right. In hypothetical speech the patient avoids making a firm commitment" +
+                    "to their will to do therapy by couching it as a potential rather than definite action.")
+            2 -> furhat.say("Great job. One can typically identify indirect speech by words phrases such as" +
+                    "'I guess', 'Maybe', 'I suppose', and the like.")
+            3 -> furhat.say(" Yes very good. When blocking indirect speech defenses, as with many others, it is" +
+                    "often effective to simply make the patient explicitly aware of what they are doing.")
+            4 -> furhat.say(" In this case the wording 'in theory' and 'conceivably' clearly give away that the " +
+                    "patient is using hypothetical speech as a defense mechanism. Make this explicit and invite them" +
+                    "to make a more decisive stand")
+        }
+        goto(Counter2)
+    }
+
+    onResponse<Yes> {
+        furhat.say(" Let's try again")
+        goto(DeclareWill) }
+
+    onResponse<No> {
+        furhat.say(" That was hypothetical speech")
+        goto(DeclareWill)
+    }
+}
+
+val Defiance2 : State = state {
+
+    val rand = Random()
+    val num = rand.nextInt(5)
+
+    onEntry {
+        when (num) {
+            0 -> furhat.ask("I don't think I want to work on my problem after all, it's not causing a lot" +
+                    "of harm anyways ")
+            1 -> furhat.ask(" On closer thought the problem is not as important as I let on, I don't think we need" +
+                    "to go into it. ")
+            2 -> furhat.ask(" I just don't want to deal with it ok")
+            3 -> furhat.ask(" Why would I want to work on something that's not a problem. My life is overall fine")
+            4 -> furhat.ask(" I don't want to examine it closer since there really is not much to discover anyway.")
+        }
+    }
+
+    onResponse<DefianceBlock2> {
+
+        it.intent.feel
+        it.intent.deny
+        it.intent.notice
+        it.intent.specific
+        it.intent.avoid
+        it.intent.problem
+
+        furhat.say("Yes that was defiance")
+        goto(Counter2)
+    }
+
+    onResponse<Yes> {
+        furhat.say(" Let's try again")
+        goto(DeclareWill)
+    }
+
+    onResponse<No> {
+        furhat.say(" That was defiance")
+        goto(DeclareWill)
+    }
+}
+
+
+val Rumination2 : State = state {
+
+    val rand = Random()
+    val num = rand.nextInt(5)
+
+    onEntry {
+        when (num) {
+            0 -> furhat.ask(" I do want to look into the problem. Or you know, part of me does and the other not," +
+                    "and then I get kind of weird about it")
+            1 -> furhat.ask(" I don't think it's beneficial to look into my problem more because really it's" +
+                    "about my brain chemistry, at least that's what my doctor said, so how could therapy help that")
+            2 -> furhat.ask(" In a way I wish I could solve this part of my inner life, but at the same time" +
+                    "it's a part of myself so it just gets really complex and strange thinking about it")
+            3 -> furhat.ask(" I do wish I could get better, at least I wonder what it would feel like to" +
+                    "be more balanced, but it is a bit scary also")
+            4 -> furhat.ask(" What do you mean by declaring my will to do therapy. I mean, I am here after all" +
+                    "so in a way I am already doing therapy am I not")
+        }
+    }
+
+    onResponse<RuminationBlock2> {
+
+        it.intent.ruminate
+        it.intent.feel
+        it.intent.notice
+        it.intent.specify
+        it.intent.intellect
+
+        furhat.say("Yes that was rumination")
+        goto(Counter2)
+    }
+
+    onResponse<Yes> {
+        furhat.say(" Let's try again")
+        goto(DeclareWill)
+    }
+
+    onResponse<No> {
+        furhat.say(" That was rumination")
+        goto(DeclareWill)
+    }
+}
+
+
+val Anxiety2 : State = state {
+
+    val rand = Random()
+    val num = rand.nextInt(5)
+
+    onEntry {
+        when (num) {
+            0 -> furhat.ask(" I do want to look at it, I just started feeling really uncomfortable right now")
+            1 -> furhat.ask(" There is this strange feeling in my stomach that is coming up")
+            2 -> furhat.ask(" Do you have a tylenol? I got a headache out of nowhere")
+            3 -> furhat.ask(" I don't know why but I just started feeling really cold and sweaty all of a sudden")
+            4 -> furhat.ask(" I do want to explore my feeling, it's just my heart started beating really fast" +
+                    "so it's difficult")
+        }
+    }
+
+    onResponse<AnxietyBlock2> {
+        furhat.say("Yes I do feel anxious now that you mention it")
+        goto(Counter2)
+    }
+
+    onResponse<Yes> {
+        furhat.say(" Let's try again")
+        goto(DeclareWill)
+    }
+
+    onResponse<No> {
+        furhat.say(" That was anxiety")
+        goto(DeclareWill)
+    }
+}
+
+
+val Resolution2 : State = state {
+
+    onEntry {
+        furhat.ask("Great, you got through the second part! Would you like to continue to the next section")
+    }
+
+    onResponse<Yes> {
+        goto(DeclareSpecific)
+    }
+
+    onResponse<No> {
+        goto(Idle)
+    }
+}
+
+
+val DeclareSpecific : State = state {
+
+    val rand = Random()
+    val num = rand.nextInt(5)
+
+    onEntry {
+        when (num) {
+            0 -> goto(Generalization3)
+            1 -> goto(NoMemory3)
+            2 -> goto(Diversification3)
+            else -> goto(Idle)
+        }
+    }
+}
+
+
+
+var counter3 = 0
+
+val Counter3 : State = state {
+
+    onEntry {
+        counter3 += 1
+        if (counter3 < 5)
+            goto(DeclareSpecific)
+        else {
+            furhat.say(" There was a talk last weekend when I got angry with my dad right after he mentioned my" +
+                    "mother's illness.")
+            goto(Resolution3)
+        }
+    }
+}
+
+
+
+val Generalization3 : State = state {
+
+    val rand = Random()
+    val num = rand.nextInt(5)
+
+    onEntry {
+        when (num) {
+            0 -> furhat.ask(" It's the same pattern every time we talk on the phone")
+            1 -> furhat.ask(" I just feel overall frustrated whenever it happens and don't know what to do")
+            2 -> furhat.ask(" It's just this sense of annoyance and it keeps coming up in many instances")
+            3 -> furhat.ask(" I can't give a specific example because it's a bigger issue, I think it's got" +
+                    "to do with my overall character")
+            4 -> furhat.ask(" I have this tendency in those situations to flare up instead of reacting calmly")
+        }
+    }
+
+    onResponse<GeneralizationBlock3> {
+
+        it.intent.feel
+        it.intent.avoid
+        it.intent.person
+        it.intent.general
+        it.intent.notice
+        it.intent.specific
+        it.intent.problem
+        it.intent.specific
+
+        furhat.say("Yes that was generalization")
+        goto(Counter3)
+    }
+
+    onResponse<Yes> {
+        furhat.say(" Let's try again")
+        goto(DeclareSpecific)
+    }
+
+    onResponse<No> {
+        furhat.say(" That was Generalization")
+        goto(DeclareSpecific)
+    }
+}
+
+
+val NoMemory3 : State = state {
+
+    val rand = Random()
+    val num = rand.nextInt(5)
+
+    onEntry {
+        when (num) {
+            0 -> furhat.ask(" I can't really remember a particular time it happened")
+            1 -> furhat.ask(" How am I supposed to remember all the details that happen in my life")
+            2 -> furhat.ask(" Thinking about it I can't really recall a specific episode when I got angry")
+            3 -> furhat.ask(" I just have a vague sense of what happened, it's not very clear in my memory")
+            4 -> furhat.ask(" I just know it happened sometime last weekend but can not remember more than that")
+        }
+    }
+
+    onResponse<NoMemoryBlock3> {
+
+        it.intent.general
+        it.intent.avoid
+        it.intent.memory
+        it.intent.notice
+        it.intent.problem
+        it.intent.specific
+
+        furhat.say(" Yes, that was no memory")
+        goto(Counter3)
+    }
+
+
+    onResponse<Yes> {
+        furhat.say(" Let's try again")
+        goto(DeclareSpecific)
+    }
+
+    onResponse<No> {
+        furhat.say(" That was no memory")
+        goto(DeclareSpecific)
+    }
+}
+
+
+
+val Diversification3 : State = state {
+
+    val rand = Random()
+    val num = rand.nextInt(5)
+
+    onEntry {
+        when (num) {
+            0 -> furhat.ask(" Another thing that is bothering me is how the rest of the family backs up my dad")
+            1 -> furhat.ask(" I just want to mention first how crazy the mall was yesterday with all those sales")
+            2 -> furhat.ask(" Did I tell you about the traffic on my way here. That's why I was a bit late")
+            3 -> furhat.ask(" Truth be told my dad is overall a good guy. This one time he really helped me out" +
+                    "when I was in financial trouble")
+            4 -> furhat.ask(" You make me feel like I do when my wife complains I don't do the dishes. Though" +
+                    "she does have a point sometimes.")
+        }
+    }
+}
+
+
+val Resolution3 : State = state {
+
+    onEntry {
+        furhat.say("Great, you got through the third part! Would you like to continue to the next section")
+    }
+}
+
+
+
+
+/* onResponse<Yes> {
+     goto(DeclareSpecific)
+ }
+
+ onResponse<No> {
+     goto(Idle)
+ } */
