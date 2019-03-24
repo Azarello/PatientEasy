@@ -136,13 +136,14 @@ val Vague1 : State = state {
         goto(Counter1)
     }
 
-    onResponse<Yes> {
-        furhat.say("Let's try again")
+    onResponse<TryAgain> {
+        furhat.say("Let's try another defense")
         goto(DeclareProblem)
     }
 
-    onResponse<No> {
-        furhat.say("It was a vague defense")
+    onResponse<GiveAnswer> {
+        furhat.say("It was a vague defense. They can often be identified because they don't give a clear or" +
+                " specific explanation of a problem, but rather ambiguous and unclear references.  ")
         goto(DeclareProblem)
     }
 }
@@ -189,13 +190,14 @@ val Denial1 : State = state {
         goto(Counter1)
     }
 
-    onResponse<Yes> {
-        furhat.say("Let's try again")
+    onResponse<TryAgain> {
+        furhat.say("Let's try again with another defense")
         goto(DeclareProblem)
     }
 
-    onResponse<No> {
-        furhat.say("That was a denial")
+    onResponse<GiveAnswer> {
+        furhat.say("That was a denial. You can often identify it because the patient refuses to talk about their " +
+                " problem. Either they don't want to mention what is causing it, or the troubling emotion itself. ")
         goto(DeclareProblem)
     }
 }
@@ -243,13 +245,14 @@ val Projection1 : State = state {
         goto(Counter1)
     }
 
-    onResponse<Yes> {
-        furhat.say("Let's try again")
+    onResponse<TryAgain> {
+        furhat.say("No problem. Let's try another defense instead.")
         goto(DeclareProblem)
     }
 
-    onResponse<No> {
-        furhat.say("That was a projection")
+    onResponse<GiveAnswer> {
+        furhat.say("That was a projection. Whenever the patient mentions other people and not their own feelings" +
+                " it is a good sign that they may be projecting.")
         goto(DeclareProblem)
     }
 }
@@ -295,13 +298,14 @@ val CoverWord1 : State = state {
     }
 
 
-    onResponse<Yes> {
-        furhat.say("Let's try again")
+    onResponse<TryAgain> {
+        furhat.say("Ok, this one was pretty hard. I will give you another defense for now.")
         goto(DeclareProblem)
     }
 
-    onResponse<No> {
-        furhat.say("That was a cover word block")
+    onResponse<GiveAnswer> {
+        furhat.say("That was a cover word block. When identifying this defense, look for words that express weak" +
+                " emotional content. Oftentimes patients may use unusual adjectives as covers so that's a good hint.")
         goto(DeclareProblem)
     }
 }
@@ -347,12 +351,13 @@ val Rationalization1 : State = state {
         goto(Counter1)
     }
 
-    onResponse<Yes> {
-        furhat.say("Try again")
+    onResponse<TryAgain> {
+        furhat.say("Sure. Let's go with another defense, I'm sure you will get this one next time.")
     }
 
-    onResponse<No> {
-        furhat.say("It was rationalization")
+    onResponse<GiveAnswer> {
+        furhat.say("It was rationalization. Whenever patients provide reasons for their problem rather than" +
+                " talking directly about their emotions they may be rationalizing. ")
     }
 }
 

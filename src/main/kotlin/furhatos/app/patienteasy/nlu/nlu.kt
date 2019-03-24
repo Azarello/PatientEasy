@@ -194,6 +194,33 @@ class Repeat : Intent() {
     }
 }
 
+class TryAgain : Intent() {
+    override fun getExamples(lang: Language): List<String> {
+        return listOf("Try again",
+                "Yes",
+                "Again",
+                "Next",
+                "Another",
+                "Let's try another",
+                "Let's try again",
+                "Let me try another")
+    }
+}
+
+class GiveAnswer : Intent() {
+    override fun getExamples(lang: Language): List<String> {
+        return listOf("Give answer",
+                "Answer",
+                "No",
+                "Give up",
+                "I give up",
+                "What is the answer",
+                " Give me the answer",
+                "Could you give me the answer")
+    }
+}
+
+
 class VagueBlock1(val specific : Specify? = null, val avoid : Avoid? = null,
                   val notice : Notice? = null, val negative : NegativeFeeling? = null,
                   val person : Person? = null, val problem:  Problem? = null,
