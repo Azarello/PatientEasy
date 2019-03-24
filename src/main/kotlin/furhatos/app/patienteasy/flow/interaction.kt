@@ -8,16 +8,16 @@ import java.util.*
 val Start : State = state(Interaction) {
 
     onEntry {
-        furhat.ask("Hello and welcome to this module in which you will learn more about Intensive Short-Term " +
-                "Dynamic Psychotherapy. The first step in developing a therapeutic alliance is to get the patient" +
-                "to declare their internal emotional problem. Your task will be to do exactly this by " +
-                "correctly identifying and blocking five defenses. Say yes if you would like to begin or no" +
-                "if you want to hear the instructions again")
+        furhat.ask("Hello and welcome to this program in which you will learn more about Intensive Short-Term " +
+                "Dynamic Psychotherapy. The first step in the therapeutic process is to establish a conscious " +
+                "therapeutic alliance. The following program will guide you through different modules that train " +
+                "the skills necessary to establishing this alliance. When you are ready to start the first module, " +
+                " say start. ")
+
     }
 
-    onResponse<Yes>{
-        furhat.say("Great. This will be my first defense")
-        goto(DeclareProblem)
+    onResponse<Continue>{
+        goto(FirstModule)
     }
 
     onResponse<No>{
@@ -26,6 +26,34 @@ val Start : State = state(Interaction) {
     }
 }
 
+val FirstModule1 : State = state {
+    onEntry {
+        goto(FirstModule)
+    }
+}
+
+val FirstModule : State = state {
+    onEntry {
+        furhat.ask("The first step in establishing a conscious therapeutic alliance is to get the patient to " +
+                "declare an internal emotional problem, meaning they explicitly state an issue they are struggling" +
+                " with. It is important for both patient and therapist to have a clear " +
+                " picture of the issue to start therapy. Patients are often reluctant to explicitly state their " +
+                "issue immediately and use various defenses to avoid talking about the problem. " +
+                "In this module you will learn to" +
+                " identify and block such defenses. The module is complete once you have correctly identified and " +
+                "blocked five defenses. Say continue if you are ready to start or repeat if you would like to hear the " +
+                "instruction again")
+    }
+
+    onResponse<Continue> {
+        furhat.say("Ok, this will be the first defense.")
+        goto(DeclareProblem)
+    }
+
+    onResponse<Repeat> {
+        goto(FirstModule1)
+    }
+}
 
 val DeclareProblem : State = state {
 
@@ -563,6 +591,12 @@ val Rumination2 : State = state {
         it.intent.notice
         it.intent.specify
         it.intent.intellect
+
+        when (num) {
+            0-> furhat.say(" Yes this is rumination. One can identify it because the patient gets confused and" +
+                    "starts talking in circles to avoid the concrete issue at hand.")
+            1 -> furhat.say(" Correct. ")
+        }
 
         furhat.say("Yes that was rumination")
         goto(Counter2)

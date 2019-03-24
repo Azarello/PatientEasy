@@ -172,6 +172,28 @@ class Indirect : EnumEntity(stemming = true, speechRecPhrases = true) {
 
 
 
+class Continue : Intent() {
+    override fun getExamples(lang: Language): List<String> {
+        return listOf("Continue",
+                "Go on",
+                "Let's continue",
+                "Yes",
+                "Ready",
+                "Start")
+    }
+}
+
+class Repeat : Intent() {
+    override fun getExamples(lang: Language): List<String> {
+        return listOf("Repeat",
+                "Repeat that please",
+                "Could you repeat that",
+                "Say again",
+                "Again",
+                "No")
+    }
+}
+
 class VagueBlock1(val specific : Specify? = null, val avoid : Avoid? = null,
                   val notice : Notice? = null, val negative : NegativeFeeling? = null,
                   val person : Person? = null, val problem:  Problem? = null,
