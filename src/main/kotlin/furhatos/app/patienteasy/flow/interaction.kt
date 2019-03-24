@@ -3,6 +3,7 @@ package furhatos.app.patienteasy.flow
 import furhatos.nlu.common.*
 import furhatos.flow.kotlin.*
 import furhatos.app.patienteasy.nlu.*
+import org.netlib.util.Second
 import java.util.*
 
 val Start : State = state(Interaction) {
@@ -45,6 +46,8 @@ val FirstModule : State = state {
                 "instruction again")
     }
 
+
+
     onResponse<Continue> {
         furhat.say("Ok, this will be the first defense.")
         goto(DeclareProblem)
@@ -70,9 +73,7 @@ val DeclareProblem : State = state {
     }
 }
 
-
 var counter1 = 0
-
 
 val Counter1 : State = state {
 
@@ -80,15 +81,13 @@ val Counter1 : State = state {
 
     onEntry {
         counter1 += 1
-        if (counter1 < 5) {
+        if (counter1 < 3) {
             furhat.say(" Let's move on to the next defense")
             goto(DeclareProblem) }
         else {
-            furhat.say(" My problem is that I get very angry with dad at times when we talk")
-            furhat.say(" Great job! You got the patient to declare their internal problem which is " +
-                    "the first part of the establishing a therapeutic alliance. In the next module we will look at" +
-                    " the second part of the therapeutic process.")
+            furhat.say("My problem is that I get very angry with my father sometimes when we speak")
             goto(Resolution1)
+
         }
     }
 }
@@ -361,6 +360,31 @@ val Rationalization1 : State = state {
 val Resolution1 : State = state {
 
     onEntry {
+        furhat.ask(" Great job! You got the patient to declare an internal problem which is the anger they " +
+                "experience when talking to their father. You have succesfully completed the first module and first " +
+                "part of establishing a therapeutic alliance. If you would like to go over this module again say repeat. " +
+                "If you would like to continue to the next module say continue.")
+    }
+
+    onResponse<Repeat> {
+        goto(FirstModule)
+    }
+
+    onResponse<Continue> {
+        goto(SecondModule)
+    }
+}
+
+val SecondModule1 : State = state {
+    onEntry {
+        goto(SecondModule)
+    }
+}
+
+
+val SecondModule : State = state {
+
+    onEntry {
         furhat.ask("The second part of establishing the therapeutic alliance involves getting the patient" +
                 "to declare their will to do therapy. It is important to keep in mind that one should never explore" +
                 "a problem unless the patient first declares their wish to work on it in a therapeutic setting. In this " +
@@ -369,14 +393,18 @@ val Resolution1 : State = state {
                 "to declare their will to explore their problem with you. Are you ready")
     }
 
-    onResponse<Yes> {
+    onResponse<Continue> {
         goto(DeclareWill)
     }
 
-    onResponse<No> {
-        goto(Idle)
+    onResponse<Repeat> {
+        var counter1 = 0
+        goto(SecondModule1)
     }
 }
+
+
+
 
 val DeclareWill : State = state {
 
