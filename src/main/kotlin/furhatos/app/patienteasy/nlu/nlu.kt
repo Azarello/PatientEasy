@@ -203,7 +203,8 @@ class TryAgain : Intent() {
                 "Another",
                 "Let's try another",
                 "Let's try again",
-                "Let me try another")
+                "Let me try another",
+                "Let's go next")
     }
 }
 
@@ -273,7 +274,9 @@ class VagueBlock1(val specific : Specify? = null, val avoid : Avoid? = null,
                 " @notice you @avoid @specific @negative",
                 " @feel @negative is @avoid",
                 " @negative is @avoid, could you @specific",
-                " @notice you @avoid instead of @specific @feel"
+                " @notice you @avoid instead of @specific @feel",
+                " Vagueness",
+                " Vague"
         )
     }
 }
@@ -317,7 +320,9 @@ class DenialBlock1(val deny : Denying? = null, val feel : Feel? = null, val noti
                 " can you @specific @feel instead of @deny,",
                 " Would you @specific instead of @deny",
                 " @notice you @deny your @feel",
-                " do you @notice you @deny instead of @specific"
+                " do you @notice you @deny instead of @specific",
+                " Denial",
+                " Deny"
         )
     }
 }
@@ -378,7 +383,9 @@ class RationalizationBlock1(val intellect : Intellectual? = null, val feel : Fee
                 " @notice @negative is @intellect",
                 " @notice @negative is just @intellect, tell me @feel",
                 " do you @notice @negative is @intellect",
-                " can you @notice @negative is @intellect, can you tell me @feel"
+                " can you @notice @negative is @intellect, can you tell me @feel",
+                " rationalization",
+                " thought"
         )
     }
 }
@@ -434,7 +441,9 @@ class CoverWordBlock1(val cover : CoverWords? = null, val negative : NegativeFee
                 " @negative is @cover how do you @feel",
                 " @cover is @cover how do you @feel",
                 " What is your @feel when @person does that",
-                " What do you actually @feel"
+                " What do you actually @feel",
+                " Cover word",
+                " Cover word block"
         )
     }
 }
@@ -494,7 +503,8 @@ class ProjectionBlock1(val person : Person? = null, val obey : Obey? = null, val
                 " can @person @specify your @will instead of @person @intellect",
                 " could @person @specify your @feel instead of @person @intellect",
                 " could @person @specify your @intellect instead of @person @will",
-                "Projection")
+                "Projection",
+                " you are projecting")
     }
 }
 
@@ -539,7 +549,8 @@ class DefianceBlock2(val deny : Denying? = null, val feel : Feel? = null, val no
                 " can you @specific @feel instead of @deny,",
                 " Would you @specific instead of @deny",
                 " @notice you @deny your @feel",
-                " do you @notice you @deny instead of @specific"
+                " do you @notice you @deny instead of @specific",
+                " defiance"
         )
     }
 }
@@ -568,7 +579,11 @@ class HypotheticalSpeechBlock2(val avoid: Avoid? = null, val problem: Problem? =
                 " @indirect @avoid @will",
                 " @indirect @avoid @feel",
                 " now you are @indirect",
-                " now you are being @indirect")
+                " now you are being @indirect",
+                " hypothetica speech",
+                " indirect speech",
+                "hypothetical",
+                "indirect")
     }
 }
 
@@ -610,7 +625,9 @@ class RuminationBlock2(val ruminate : Ruminate? = null, val feel : Feel? = null,
                 " What do you @feel though",
                 " @intellect will not help you",
                 " That's a nice @intellect, but what about @feel",
-                " Interesting @intellect, but can you @specify @feel"
+                " Interesting @intellect, but can you @specify @feel",
+                " rumination",
+                " you are ruminating"
         )
     }
 }
@@ -670,7 +687,9 @@ class ProjectionBlock2(val person : Person? = null, val obey : Obey? = null, val
                 " that's @person @feel and not @person @will",
                 " can @person @specify your @will instead of @person @intellect",
                 " could @person @specify your @feel instead of @person @intellect",
-                " could @person @specify your @intellect instead of @person @will")
+                " could @person @specify your @intellect instead of @person @will",
+                " projection",
+                " you are projecting")
     }
 }
 
@@ -730,7 +749,9 @@ class GeneralizationBlock3(val feel : Feel? = null, val specific : Specify? = nu
                 " @person @avoid @feel by being @general",
                 " To not @avoid @feel try @specific",
                 " Instead of @avoid @specific @problem",
-                " Try to @specific @problem instead of @general")
+                " Try to @specific @problem instead of @general",
+                " generalization",
+                " you are generalizing")
     }
 }
 
@@ -768,6 +789,8 @@ class NoMemoryBlock3(val general : Generalize? = null, val memory : Memory? = nu
                 " could you @specific one @problem",
                 " how come you cannot @memory",
                 " your @memory is @avoid",
-                " @notice you @avoid @problem with @memory")
+                " @notice you @avoid @problem with @memory",
+                " no memory",
+                " bad memory")
     }
 }

@@ -3,6 +3,7 @@ package furhatos.app.patienteasy.flow
 import furhatos.nlu.common.*
 import furhatos.flow.kotlin.*
 import furhatos.app.patienteasy.nlu.*
+import org.apache.logging.log4j.core.async.JCToolsBlockingQueueFactory
 import org.netlib.util.Second
 import java.util.*
 
@@ -39,10 +40,10 @@ val FirstModule : State = state {
                 "declare an internal emotional problem, meaning they explicitly state an issue they are struggling" +
                 " with. It is important for both patient and therapist to have a clear " +
                 " picture of the issue to start therapy. Patients are often reluctant to explicitly state their " +
-                "issue immediately and use various defenses to avoid talking about the problem. " +
+                "issue immediately, and use various defense mechanisms to avoid talking about the problem. " +
                 "In this module you will learn to" +
                 " identify and block such defenses. The module is complete once you have correctly identified and " +
-                "blocked five defenses. Say continue if you are ready to start or repeat if you would like to hear the " +
+                "blocked five defenses. Say continue if you are ready to start, or repeat if you would like to hear the " +
                 "instruction again")
     }
 
@@ -61,7 +62,7 @@ val FirstModule : State = state {
 val DeclareProblem : State = state {
 
     val rand = Random()
-    val num = rand.nextInt(3)
+    val num = rand.nextInt(5)
     onEntry {
         when (num) {
             0 -> goto(Vague1)
@@ -81,7 +82,7 @@ val Counter1 : State = state {
 
     onEntry {
         counter1 += 1
-        if (counter1 < 3) {
+        if (counter1 < 5) {
             furhat.say(" Let's move on to the next defense")
             goto(DeclareProblem) }
         else {
@@ -91,6 +92,16 @@ val Counter1 : State = state {
         }
     }
 }
+val Wait1 : State = state {
+
+    onEntry {
+        furhat.ask("When you are ready for the next defense, say next")
+    }
+
+    onResponse<Continue> {
+        goto(Counter1)
+    }
+}
 
 val Vague1 : State = state {
 
@@ -98,7 +109,7 @@ val Vague1 : State = state {
     val num = rand.nextInt(5)
     onEntry {
         when (num) {
-            0 -> furhat.ask("I suppose I've just been feeling kind of down lately")
+            0 -> furhat.ask("I've just been feeling kind of down lately and not sure what is the matter")
             1 -> furhat.ask("I've been having these episodes for a while that are sort of a problem")
             2 -> furhat.ask("It's something to do with my father, just stuff going on that's complicated")
             3 -> furhat.ask("It's just these things happening in my life you know")
@@ -133,7 +144,7 @@ val Vague1 : State = state {
 
 
 
-        goto(Counter1)
+        goto(Wait1)
     }
 
     onResponse<TryAgain> {
@@ -187,7 +198,7 @@ val Denial1 : State = state {
         }
 
 
-        goto(Counter1)
+        goto(Wait1)
     }
 
     onResponse<TryAgain> {
@@ -242,7 +253,7 @@ val Projection1 : State = state {
                     "as in fact being his fathers issue. ")
         }
 
-        goto(Counter1)
+        goto(Wait1)
     }
 
     onResponse<TryAgain> {
@@ -294,7 +305,7 @@ val CoverWord1 : State = state {
                     "actual painful emotions. By inviting them to use more appropriate words they may feel more" +
                     "comfortable exploring their feelings and vice versa.")
         }
-        goto(Counter1)
+        goto(Wait1)
     }
 
 
@@ -348,7 +359,7 @@ val Rationalization1 : State = state {
             4 -> furhat.say(" Good job. In order to block rationalization, help the patient differentiate " +
                     "their reasons from feelings and then help them explore the feelings directly")
         }
-        goto(Counter1)
+        goto(Wait1)
     }
 
     onResponse<TryAgain> {
@@ -366,12 +377,13 @@ val Resolution1 : State = state {
 
     onEntry {
         furhat.ask(" Great job! You got the patient to declare an internal problem which is the anger they " +
-                "experience when talking to their father. You have succesfully completed the first module and first " +
+                "experience when talking to their father. You have successfully completed the first module and first " +
                 "part of establishing a therapeutic alliance. If you would like to go over this module again say repeat. " +
                 "If you would like to continue to the next module say continue.")
     }
 
     onResponse<Repeat> {
+        counter1 = 0
         goto(FirstModule)
     }
 
@@ -390,12 +402,12 @@ val SecondModule1 : State = state {
 val SecondModule : State = state {
 
     onEntry {
-        furhat.ask("The second part of establishing the therapeutic alliance involves getting the patient" +
+        furhat.ask("The second part of establishing the therapeutic alliance involves getting the patient " +
                 "to declare their will to do therapy. It is important to keep in mind that one should never explore" +
                 "a problem unless the patient first declares their wish to work on it in a therapeutic setting. In this " +
-                "module we will look at defenses that typically prevent the patient may use to avoid expressing" +
-                "their will to do therapy. Your task is to identify and block five defenses in order to get the patient" +
-                "to declare their will to explore their problem with you. Are you ready")
+                "module we will look at defenses that a patient may use to avoid expressing " +
+                "their will to do therapy. Your task is to identify and block five defenses in order to get the patient " +
+                "to declare their will to explore their problem with you. Are you ready?")
     }
 
     onResponse<Continue> {
@@ -403,7 +415,6 @@ val SecondModule : State = state {
     }
 
     onResponse<Repeat> {
-        var counter1 = 0
         goto(SecondModule1)
     }
 }
@@ -435,7 +446,7 @@ val Counter2 : State = state {
 
     onEntry {
         counter2 += 1
-        if (counter2 < 3)
+        if (counter2 < 5)
             goto(DeclareWill)
         else {
             furhat.say(" Yes, I do want to work on my issues about getting angry with my father.")
@@ -686,7 +697,7 @@ val Resolution2 : State = state {
         furhat.ask("Great, you got through the second part! Would you like to continue to the next section")
     }
 
-    onResponse<Yes> {
+    onResponse<Continue> {
         goto(DeclareSpecific)
     }
 
