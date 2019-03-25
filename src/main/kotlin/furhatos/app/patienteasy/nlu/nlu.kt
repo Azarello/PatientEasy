@@ -53,7 +53,8 @@ class Denying : EnumEntity(stemming = true, speechRecPhrases = true) {
     override fun getEnum(lang: Language): List<String> {
         return listOf("deny", "denying", "withhold", "withholding", "repressing",
                 "repress", "suppress", "suppressing", "negating", "negate",
-                "ignore", "ignoring", "not seeing", "refuse", "refusing", "hide", "hiding", "minimize")
+                "ignore", "ignoring", "not seeing", "refuse", "refusing", "hide", "hiding", "minimize",
+                "defy", "defying")
     }
 }
 
@@ -583,7 +584,7 @@ class HypotheticalSpeechBlock2(val avoid: Avoid? = null, val problem: Problem? =
                 " @indirect @avoid @feel",
                 " now you are @indirect",
                 " now you are being @indirect",
-                " hypothetica speech",
+                " hypothetical speech",
                 " indirect speech",
                 "hypothetical",
                 "indirect")
@@ -630,7 +631,8 @@ class RuminationBlock2(val ruminate : Ruminate? = null, val feel : Feel? = null,
                 " That's a nice @intellect, but what about @feel",
                 " Interesting @intellect, but can you @specify @feel",
                 " rumination",
-                " you are ruminating"
+                " you are ruminating",
+                " Can you @notice you are @ruminate"
         )
     }
 }

@@ -404,7 +404,7 @@ val SecondModule : State = state {
     onEntry {
         furhat.ask("The second part of establishing the therapeutic alliance involves getting the patient " +
                 "to declare their will to do therapy. It is important to keep in mind that one should never explore" +
-                "a problem unless the patient first declares their wish to work on it in a therapeutic setting. In this " +
+                " a problem unless the patient first declares their wish to work on it in a therapeutic setting. In this " +
                 "module we will look at defenses that a patient may use to avoid expressing " +
                 "their will to do therapy. Your task is to identify and block five defenses in order to get the patient " +
                 "to declare their will to explore their problem with you. Are you ready?")
@@ -501,12 +501,12 @@ val Projection2 : State = state {
         goto(Counter2)
     }
 
-    onResponse<Yes> {
+    onResponse<TryAgain> {
         furhat.say(" Let's try again")
         goto(DeclareWill)
     }
 
-    onResponse<No> {
+    onResponse<GiveAnswer> {
         furhat.say(" That was hypothetical speech")
         goto(DeclareWill)
     }
@@ -556,11 +556,11 @@ val HypotheticalSpeech2 : State = state {
         goto(Counter2)
     }
 
-    onResponse<Yes> {
+    onResponse<TryAgain> {
         furhat.say(" Let's try again")
         goto(DeclareWill) }
 
-    onResponse<No> {
+    onResponse<GiveAnswer> {
         furhat.say(" That was hypothetical speech")
         goto(DeclareWill)
     }
@@ -573,9 +573,9 @@ val Defiance2 : State = state {
 
     onEntry {
         when (num) {
-            0 -> furhat.ask("I don't think I want to work on my problem after all, it's not causing a lot" +
+            0 -> furhat.ask("I don't think I want to work on my problem after all, it's not causing a lot " +
                     "of harm anyways ")
-            1 -> furhat.ask(" On closer thought the problem is not as important as I let on, I don't think we need" +
+            1 -> furhat.ask(" On closer thought the problem is not as important as I let on, I don't think we need " +
                     "to go into it. ")
             2 -> furhat.ask(" I just don't want to deal with it ok")
             3 -> furhat.ask(" Why would I want to work on something that's not a problem. My life is overall fine")
@@ -596,12 +596,12 @@ val Defiance2 : State = state {
         goto(Counter2)
     }
 
-    onResponse<Yes> {
+    onResponse<TryAgain> {
         furhat.say(" Let's try again")
         goto(DeclareWill)
     }
 
-    onResponse<No> {
+    onResponse<GiveAnswer> {
         furhat.say(" That was defiance")
         goto(DeclareWill)
     }
@@ -615,15 +615,15 @@ val Rumination2 : State = state {
 
     onEntry {
         when (num) {
-            0 -> furhat.ask(" I do want to look into the problem. Or you know, part of me does and the other not," +
+            0 -> furhat.ask(" I do want to look into the problem. Or you know, part of me does and the other not, " +
                     "and then I get kind of weird about it")
-            1 -> furhat.ask(" I don't think it's beneficial to look into my problem more because really it's" +
+            1 -> furhat.ask(" I don't think it's beneficial to look into my problem more because really it's " +
                     "about my brain chemistry, at least that's what my doctor said, so how could therapy help that")
-            2 -> furhat.ask(" In a way I wish I could solve this part of my inner life, but at the same time" +
+            2 -> furhat.ask(" In a way I wish I could solve this part of my inner life, but at the same time " +
                     "it's a part of myself so it just gets really complex and strange thinking about it")
-            3 -> furhat.ask(" I do wish I could get better, at least I wonder what it would feel like to" +
+            3 -> furhat.ask(" I do wish I could get better, at least I wonder what it would feel like to " +
                     "be more balanced, but it is a bit scary also")
-            4 -> furhat.ask(" What do you mean by declaring my will to do therapy. I mean, I am here after all" +
+            4 -> furhat.ask(" What do you mean by declaring my will to do therapy. I mean, I am here after all " +
                     "so in a way I am already doing therapy am I not")
         }
     }
@@ -637,7 +637,7 @@ val Rumination2 : State = state {
         it.intent.intellect
 
         when (num) {
-            0-> furhat.say(" Yes this is rumination. One can identify it because the patient gets confused and" +
+            0-> furhat.say(" Yes this is rumination. One can identify it because the patient gets confused and " +
                     "starts talking in circles to avoid the concrete issue at hand.")
             1 -> furhat.say(" Correct. ")
         }
@@ -646,12 +646,12 @@ val Rumination2 : State = state {
         goto(Counter2)
     }
 
-    onResponse<Yes> {
+    onResponse<TryAgain> {
         furhat.say(" Let's try again")
         goto(DeclareWill)
     }
 
-    onResponse<No> {
+    onResponse<GiveAnswer> {
         furhat.say(" That was rumination")
         goto(DeclareWill)
     }
@@ -679,12 +679,12 @@ val Anxiety2 : State = state {
         goto(Counter2)
     }
 
-    onResponse<Yes> {
+    onResponse<TryAgain> {
         furhat.say(" Let's try again")
         goto(DeclareWill)
     }
 
-    onResponse<No> {
+    onResponse<GiveAnswer> {
         furhat.say(" That was anxiety")
         goto(DeclareWill)
     }
