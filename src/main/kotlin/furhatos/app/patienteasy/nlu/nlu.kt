@@ -179,7 +179,10 @@ class Continue : Intent() {
                 "Let's continue",
                 "Yes",
                 "Ready",
-                "Start")
+                "Start",
+                " Next",
+                " Next example",
+                " Next please")
     }
 }
 

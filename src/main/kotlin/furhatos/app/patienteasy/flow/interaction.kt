@@ -241,8 +241,8 @@ val Projection1 : State = state {
         it.intent.notice
 
         when (num) {
-            0 -> furhat.say("Excellent. In projection a patient may for example blame others as the cause of their " +
-                    "problem, or claim that only other people believe the patient has a problem.")
+            0 -> furhat.say("Excellent. In projection a patient may blame others as the cause of their " +
+                    "problem, or ignore their issue by claiming that only other people believe the patient has a problem.")
             1 -> furhat.say("Perfect. As with other defenses, one way of blocking projection is to simply point out the" +
                     "defense explicitly to the patient. Ask them how they think without reference to others.")
             2 -> furhat.say(" Yes that's projection. As is shown in this example, it is not uncommon for patients " +
@@ -484,7 +484,7 @@ val Projection2 : State = state {
 
         when (num) {
             0 -> furhat.say("Yes, this is a classic example of projection in which the patient projects their" +
-                    "will to do therapy onto someone else. Their brother brother wants them to go to therapy" +
+                    "will to do therapy onto someone else. Their brother wants them to go to therapy" +
                     "even though the patient himself does not claim to want to")
             1 -> furhat.say("Good job. As in other cases of projection it is rather common for patients to" +
                     "project their will to do therapy onto the therapist. One way to block this is by reminding the patient" +
