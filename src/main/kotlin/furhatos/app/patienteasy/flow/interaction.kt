@@ -10,8 +10,8 @@ import java.util.*
 val Start : State = state(Interaction) {
 
     onEntry {
-        furhat.ask("Hello and welcome to this program in which you will learn more about Intensive Short-Term " +
-                "Dynamic Psychotherapy. The first step in the therapeutic process is to establish a conscious " +
+        furhat.ask("Hello and welcome to this program, in which you will learn more about Intensive Short-Term " +
+                "Dynamic Psychotherapy. The first step in the therapeutic process, is to establish a conscious " +
                 "therapeutic alliance. The following program will guide you through different modules that train " +
                 "the skills necessary in establishing this alliance. When you are ready to start the first module, " +
                 " say start.")
@@ -36,14 +36,15 @@ val FirstModule1 : State = state {
 
 val FirstModule : State = state {
     onEntry {
-        furhat.say("The first step in establishing a conscious therapeutic alliance is to get the patient to " +
+        furhat.say("The first step in establishing a conscious therapeutic alliance, is to get the patient to " +
                 "declare an internal emotional problem, meaning they explicitly state an issue they are struggling" +
                 " with. It is important for both patient and therapist to have a clear " +
                 " picture of the issue to start therapy. Patients are often reluctant to explicitly state their " +
                 "issue immediately, and use various defense mechanisms to avoid talking about the problem. ")
         furhat.say("In this module you will learn to" +
-                " identify and block such defenses, in order to get the patient to more directly experience their emotions. " +
-                "The module is complete once you have correctly identified and blocked five defenses.")
+                " identify and block such defenses, in order to get the patient to more directly experience their emotions.  " +
+                "The module is complete once you have correctly identified and blocked five defenses, resulting in the " +
+                "patient clearly stating their problem. ")
         furhat.ask("Say continue if you are ready to start, or say repeat if you would like to hear the " +
                 "instructions again")
     }
@@ -541,14 +542,14 @@ val HypotheticalSpeech2 : State = state {
 
 
         when (num) {
-            0 -> furhat.say("Correct. Hypothetical speech may be difficult to detect since the patient does in a way" +
-                    "declare their will to do therapy, only they do it in theory without really committing. It is important" +
+            0 -> furhat.say("Correct. Hypothetical speech may be difficult to detect since the patient does in a way " +
+                    "declare their will to do therapy, only they do it in theory without really committing. It is important " +
                     "that the patient decisively makes a stand that they want to work on their problem.")
-            1 -> furhat.say("That's right. In hypothetical speech the patient avoids making a firm commitment" +
+            1 -> furhat.say("That's right. In hypothetical speech the patient avoids making a firm commitment " +
                     "to their will to do therapy by couching it as a potential rather than definite action.")
-            2 -> furhat.say("Great job. One can typically identify indirect speech by words phrases such as" +
+            2 -> furhat.say("Great job. One can typically identify indirect speech by words phrases such as " +
                     "'I guess', 'Maybe', 'I suppose', and the like.")
-            3 -> furhat.say(" Yes very good. When blocking indirect speech defenses, as with many others, it is" +
+            3 -> furhat.say(" Yes very good. When blocking indirect speech defenses, as with many others, it is " +
                     "often effective to simply make the patient explicitly aware of what they are doing.")
             4 -> furhat.say(" In this case the wording 'in theory' and 'conceivably' clearly give away that the " +
                     "patient is using hypothetical speech as a defense mechanism. Make this explicit and invite them" +
@@ -670,7 +671,7 @@ val Anxiety2 : State = state {
             1 -> furhat.ask(" There is this strange feeling in my stomach that is coming up")
             2 -> furhat.ask(" Do you have a tylenol? I got a headache out of nowhere")
             3 -> furhat.ask(" I don't know why but I just started feeling really cold and sweaty all of a sudden")
-            4 -> furhat.ask(" I do want to explore my feeling, it's just my heart started beating really fast" +
+            4 -> furhat.ask(" I do want to explore my feeling, it's just my heart started beating really fast " +
                     "so it's difficult")
         }
     }
@@ -734,7 +735,7 @@ val Counter3 : State = state {
         if (counter3 < 5)
             goto(DeclareSpecific)
         else {
-            furhat.say(" There was a talk last weekend when I got angry with my dad right after he mentioned my" +
+            furhat.say(" There was a talk last weekend when I got angry with my dad right after he mentioned my " +
                     "mother's illness.")
             goto(Resolution3)
         }
@@ -753,7 +754,7 @@ val Generalization3 : State = state {
             0 -> furhat.ask(" It's the same pattern every time we talk on the phone")
             1 -> furhat.ask(" I just feel overall frustrated whenever it happens and don't know what to do")
             2 -> furhat.ask(" It's just this sense of annoyance and it keeps coming up in many instances")
-            3 -> furhat.ask(" I can't give a specific example because it's a bigger issue, I think it's got" +
+            3 -> furhat.ask(" I can't give a specific example because it's a bigger issue, I think it's got " +
                     "to do with my overall character")
             4 -> furhat.ask(" I have this tendency in those situations to flare up instead of reacting calmly")
         }
@@ -838,9 +839,9 @@ val Diversification3 : State = state {
             0 -> furhat.ask(" Another thing that is bothering me is how the rest of the family backs up my dad")
             1 -> furhat.ask(" I just want to mention first how crazy the mall was yesterday with all those sales")
             2 -> furhat.ask(" Did I tell you about the traffic on my way here. That's why I was a bit late")
-            3 -> furhat.ask(" Truth be told my dad is overall a good guy. This one time he really helped me out" +
+            3 -> furhat.ask(" Truth be told my dad is overall a good guy. This one time he really helped me out " +
                     "when I was in financial trouble")
-            4 -> furhat.ask(" You make me feel like I do when my wife complains I don't do the dishes. Though" +
+            4 -> furhat.ask(" You make me feel like I do when my wife complains I don't do the dishes. Though " +
                     "she does have a point sometimes.")
         }
     }

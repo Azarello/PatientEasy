@@ -389,7 +389,8 @@ class RationalizationBlock1(val intellect : Intellectual? = null, val feel : Fee
                 " do you @notice @negative is @intellect",
                 " can you @notice @negative is @intellect, can you tell me @feel",
                 " rationalization",
-                " thought"
+                " thought",
+                " Those are thoughts, what about your emotions"
         )
     }
 }
@@ -554,7 +555,8 @@ class DefianceBlock2(val deny : Denying? = null, val feel : Feel? = null, val no
                 " Would you @specific instead of @deny",
                 " @notice you @deny your @feel",
                 " do you @notice you @deny instead of @specific",
-                " defiance"
+                " defiance",
+                " Can you tell me your feelings instead of defying"
         )
     }
 }
