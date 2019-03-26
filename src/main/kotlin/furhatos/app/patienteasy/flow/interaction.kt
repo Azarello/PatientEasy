@@ -13,8 +13,8 @@ val Start : State = state(Interaction) {
         furhat.ask("Hello and welcome to this program in which you will learn more about Intensive Short-Term " +
                 "Dynamic Psychotherapy. The first step in the therapeutic process is to establish a conscious " +
                 "therapeutic alliance. The following program will guide you through different modules that train " +
-                "the skills necessary to establishing this alliance. When you are ready to start the first module, " +
-                " say start. ")
+                "the skills necessary in establishing this alliance. When you are ready to start the first module, " +
+                " say start.")
 
     }
 
@@ -36,15 +36,16 @@ val FirstModule1 : State = state {
 
 val FirstModule : State = state {
     onEntry {
-        furhat.ask("The first step in establishing a conscious therapeutic alliance is to get the patient to " +
+        furhat.say("The first step in establishing a conscious therapeutic alliance is to get the patient to " +
                 "declare an internal emotional problem, meaning they explicitly state an issue they are struggling" +
                 " with. It is important for both patient and therapist to have a clear " +
                 " picture of the issue to start therapy. Patients are often reluctant to explicitly state their " +
-                "issue immediately, and use various defense mechanisms to avoid talking about the problem. " +
-                "In this module you will learn to" +
-                " identify and block such defenses. The module is complete once you have correctly identified and " +
-                "blocked five defenses. Say continue if you are ready to start, or repeat if you would like to hear the " +
-                "instruction again")
+                "issue immediately, and use various defense mechanisms to avoid talking about the problem. ")
+        furhat.say("In this module you will learn to" +
+                " identify and block such defenses, in order to get the patient to more directly experience their emotions. " +
+                "The module is complete once you have correctly identified and blocked five defenses.")
+        furhat.ask("Say continue if you are ready to start, or say repeat if you would like to hear the " +
+                "instructions again")
     }
 
 
@@ -189,12 +190,12 @@ val Denial1 : State = state {
                     "patient in one way or another denying the reality of their emotional problem.")
             1 -> furhat.say(" Correct.One way of dealing with denial defenses is by pointing out to the " +
                     "patient that after all they came to a therapist so there must be something going on.")
-            2 -> furhat.say("Excellent. This kind of denial is often referred to as minimization, in which the " +
-                    "patient acknowledges they have a problem but downplays its significance and impact.")
+            2 -> furhat.say("Exactly right. In this case it is helpful to focus in on the “minor thing” to " +
+                    "see if they are denying its importance and significance in their life.")
             3 -> furhat.say("Good job. Denial can take the shape of a patient denying the stimulus of a problem, " +
                     "such as a conflict with a parent, or by denying the emotional distress itself.")
-            4 -> furhat.say("Exactly right. In this case it is helpful to focus in on the “minor thing” to " +
-                    "see if they are denying its importance and significance in their life.  ")
+            4 -> furhat.say("Excellent. This kind of denial is often referred to as minimization, in which the " +
+                    "patient acknowledges they have a problem but downplays its significance and impact.")
         }
 
 
@@ -242,14 +243,14 @@ val Projection1 : State = state {
 
         when (num) {
             0 -> furhat.say("Excellent. In projection a patient may blame others as the cause of their " +
-                    "problem, or ignore their issue by claiming that only other people believe the patient has a problem.")
-            1 -> furhat.say("Perfect. As with other defenses, one way of blocking projection is to simply point out the" +
+                    "problem, or ignore their issue by claiming that only other people believe there is a problem.")
+            1 -> furhat.say("Perfect. As with other defenses, one way of blocking projection is to simply point out the " +
                     "defense explicitly to the patient. Ask them how they think without reference to others.")
             2 -> furhat.say(" Yes that's projection. As is shown in this example, it is not uncommon for patients " +
                     "to project on to the therapist. The patient does not think he has a problem, only the therapist does.")
-            3 -> furhat.say("Good job. Projection can often be identified when patients make reference to other people" +
+            3 -> furhat.say("Good job. Projection can often be identified when patients make reference to other people " +
                     "without going into their own emotional state")
-            4 -> furhat.say(" Exactly right. This example shows an example of how the patient projects his problem" +
+            4 -> furhat.say(" Exactly right. This example shows an example of how the patient projects his problem " +
                     "as in fact being his fathers issue. ")
         }
 
@@ -293,16 +294,16 @@ val CoverWord1 : State = state {
         it.intent.specify
 
         when (num) {
-            0 -> furhat.say(" Yes this is a cover word defense. Cover words are words of weaker emotional" +
+            0 -> furhat.say(" Yes this is a cover word defense. Cover words are words of weaker emotional " +
                     "import than the patient is actually feeling.")
-            1 -> furhat.say(" Correct. 'Kind of annoying' is a cover word in this case. Clearly the patient" +
+            1 -> furhat.say(" Correct. 'Kind of annoying' is a cover word in this case. Clearly the patient " +
                     "must be feeling something stronger since they are unlikely to seek therapy for slight annoyance.")
             2 -> furhat.say(" Cover word is exactly right. Blocking cover words can be done by illuminating the " +
                     "particular word to the patient and inviting them to share more of their emotions")
-            3 -> furhat.say(" Cover words can often be identified because they don't give weight enough to the" +
+            3 -> furhat.say(" Cover words can often be identified because they don't give weight enough to the " +
                     "situation or seem contrived. The word disconcerted used in this example really sticks out.")
-            4 -> furhat.say(" Like other defenses, cover words are used to distance the patient from their" +
-                    "actual painful emotions. By inviting them to use more appropriate words they may feel more" +
+            4 -> furhat.say(" Like other defenses, cover words are used to distance the patient from their " +
+                    "actual painful emotions. By inviting them to use more appropriate words they may feel more " +
                     "comfortable exploring their feelings and vice versa.")
         }
         goto(Wait1)
@@ -347,14 +348,14 @@ val Rationalization1 : State = state {
         it.intent.problem
 
         when (num) {
-            0 -> furhat.say(" Yes correct. Rationalization means the patient describes reasons for their" +
+            0 -> furhat.say(" Yes correct. Rationalization means the patient describes reasons for their " +
                     "problem rather than the experience of their emotions")
             1 -> furhat.say("Yes this is rationalization. By analyzing the underlying reasons for their " +
-                    "feeling rather than exploring the emotions directly, the patient is distancing himself from" +
+                    "feeling rather than exploring the emotions directly, the patient is distancing himself from " +
                     "the problem.")
-            2 -> furhat.say(" Excellent. Rationalization can often be identified by words like 'think', 'reason'" +
+            2 -> furhat.say(" Excellent. Rationalization can often be identified by words like 'think', 'reason' " +
                     " or 'because' so they are a good hint the patient is rationalizing.")
-            3 -> furhat.say(" Exactly right. Keep in mind that even if the patients analysis of the problem" +
+            3 -> furhat.say(" Exactly right. Keep in mind that even if the patients analysis of the problem " +
                     "is reasonable or correct, they are nevertheless distancing themselves from their emotions")
             4 -> furhat.say(" Good job. In order to block rationalization, help the patient differentiate " +
                     "their reasons from feelings and then help them explore the feelings directly")
@@ -376,7 +377,7 @@ val Rationalization1 : State = state {
 val Resolution1 : State = state {
 
     onEntry {
-        furhat.ask(" Great job! You got the patient to declare an internal problem which is the anger they " +
+        furhat.ask(" Great job! You got the patient to declare an internal problem which, is the anger they " +
                 "experience when talking to their father. You have successfully completed the first module and first " +
                 "part of establishing a therapeutic alliance. If you would like to go over this module again say repeat. " +
                 "If you would like to continue to the next module say continue.")
