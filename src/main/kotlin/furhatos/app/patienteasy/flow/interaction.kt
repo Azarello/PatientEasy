@@ -105,6 +105,12 @@ val Wait1 : State = state {
     }
 }
 
+val Vague1Goto : State = state {
+    onEntry {
+        goto(Vague1)
+    }
+}
+
 val Vague1 : State = state {
 
     val rand = Random()
@@ -144,9 +150,14 @@ val Vague1 : State = state {
 
         }
 
-
-
         goto(Wait1)
+    }
+
+    onResponse<Hint> {
+        furhat.say("Note that the patient is not giving you very specific information about their problem. " +
+                " It is difficult to work with a problem that is not clearly expressed.")
+        furhat.say("The following defense will be of the same type, see if you can spot a similarity.")
+        goto(Vague1Goto)
     }
 
     onResponse<TryAgain> {
@@ -162,6 +173,13 @@ val Vague1 : State = state {
 }
 
 
+
+val Denial1Goto : State = state {
+    onEntry {
+        goto(Denial1)
+    }
+
+}
 
 val Denial1 : State = state {
 
@@ -203,6 +221,13 @@ val Denial1 : State = state {
         goto(Wait1)
     }
 
+    onResponse<Hint> {
+        furhat.say("What do you notice about the patients relationship to their issue? Are they able to accept" +
+                " that they have a significant problem in the first place?")
+        furhat.say("Keep these questions in mind when listening to the next defense of the same kind ")
+        goto(Denial1Goto)
+    }
+
     onResponse<TryAgain> {
         furhat.say("Let's try again with another defense")
         goto(DeclareProblem)
@@ -212,6 +237,13 @@ val Denial1 : State = state {
         furhat.say("That was a denial. You can often identify it because the patient refuses to talk about their " +
                 " problem. Either they don't want to mention what is causing it, or the troubling emotion itself. ")
         goto(DeclareProblem)
+    }
+}
+
+
+val Projection1Goto : State = state {
+    onEntry {
+        goto(Projection1)
     }
 }
 
@@ -258,6 +290,14 @@ val Projection1 : State = state {
         goto(Wait1)
     }
 
+    onResponse<Hint> {
+        furhat.say(" Notice whether the patient is taking responsibility for their issue. Are there other people" +
+                "involved in the patient's description?")
+        furhat.say("See in the next defense of the same type you can catch in what way the patient is avoiding " +
+                "their own problem")
+        goto(Projection1Goto)
+    }
+
     onResponse<TryAgain> {
         furhat.say("No problem. Let's try another defense instead.")
         goto(DeclareProblem)
@@ -270,6 +310,11 @@ val Projection1 : State = state {
     }
 }
 
+val CoverWord1Goto : State = state {
+    onEntry {
+        goto(CoverWord1)
+    }
+}
 
 val CoverWord1 : State = state {
 
@@ -310,6 +355,13 @@ val CoverWord1 : State = state {
         goto(Wait1)
     }
 
+    onResponse<Hint> {
+        furhat.say("Pay attention to the terminology of the patient. Does he use phrases that are a bit unusual " +
+                "or somehow seem out of place?")
+        furhat.say("A similar kind of defense will follow soon, see if you can see the pattern")
+        goto(CoverWord1Goto)
+    }
+
 
     onResponse<TryAgain> {
         furhat.say("Ok, this one was pretty hard. I will give you another defense for now.")
@@ -323,6 +375,12 @@ val CoverWord1 : State = state {
     }
 }
 
+
+val Rationalization1Goto : State = state {
+    onEntry {
+        goto(Rationalization1)
+    }
+}
 
 val Rationalization1 : State = state {
 
@@ -362,6 +420,14 @@ val Rationalization1 : State = state {
                     "their reasons from feelings and then help them explore the feelings directly")
         }
         goto(Wait1)
+    }
+
+    onResponse<Hint> {
+        furhat.say(" Does the patient talk directly about their feelings? See what they talk about instead of exploring" +
+                "their emotions.")
+        furhat.say(" The next defense will be of the same kind. Be attentive to what the patient does instead of" +
+                " sharing their feelings")
+        goto(Rationalization1Goto)
     }
 
     onResponse<TryAgain> {

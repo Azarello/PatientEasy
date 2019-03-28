@@ -225,6 +225,17 @@ class GiveAnswer : Intent() {
     }
 }
 
+class Hint : Intent() {
+    override fun getExamples(lang: Language): List<String> {
+        return listOf("Hint",
+                "Give hint",
+                "Could you give me a hint",
+                "Hint please",
+                "Can you give a hint please",
+                "Hint please")
+    }
+}
+
 
 class VagueBlock1(val specific : Specify? = null, val avoid : Avoid? = null,
                   val notice : Notice? = null, val negative : NegativeFeeling? = null,
@@ -705,7 +716,8 @@ class AnxietyBlock2 : Intent() {
         return listOf("That's anxiety",
                 " You are experiencing anxiety",
                 " Anxiety",
-                " Anxiety is covering your feelings")
+                " Anxiety is covering your feelings",
+                " You are anxious")
     }
 }
 
