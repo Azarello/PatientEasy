@@ -170,6 +170,34 @@ val Vague1 : State = state {
                 " specific explanation of a problem, but rather ambiguous and unclear references.  ")
         goto(DeclareProblem)
     }
+
+    onResponse<DenialBlock1> {
+        furhat.say(" Good guess. Though the patient is in a way denying you access to their emotions, denial implies" +
+                " a more direct opposition to sharing their feelings. The next defense will be of the same category")
+        goto(Vague1Goto)
+    }
+
+    onResponse<ProjectionBlock1> {
+        furhat.say(" Not quite. Keep in mind that just because a patient mentions another person does not necessarily " +
+                " mean they are projecting. There may be other more distinct defense mechanisms at play. See if you can" +
+                " spot it in the next defense of the same category.")
+        goto(Vague1Goto)
+    }
+
+    onResponse<CoverWordBlock1> {
+        furhat.say(" Not so. Consider what word you thought was a cover. Generally cover words stick out from the context" +
+                " or when a patient is clearly more emotional than the words they use.")
+        furhat.say(" Try another defense from the same category")
+        goto(Vague1Goto)
+    }
+
+    onResponse<RationalizationBlock1> {
+        furhat.say(" Not really. In this case the patient is not providing reasons for what they are feeling," +
+                " which is the basis of rationalization. See if you can see the principle at play in the next defense " +
+                " of the same kind")
+        goto(Vague1Goto)
+    }
+
 }
 
 
@@ -304,10 +332,37 @@ val Projection1 : State = state {
     }
 
     onResponse<GiveAnswer> {
-        furhat.say("That was a projection. Whenever the patient mentions other people and not their own feelings" +
+        furhat.say("That was a projection defense. Whenever the patient mentions other people and not their own feelings" +
                 " it is a good sign that they may be projecting.")
         goto(DeclareProblem)
     }
+
+    onResponse<VagueBlock1> {
+        furhat.say(" Not quite. The patient is actually being rather clear with what they think in this case. In " +
+                " the next defense, listen for the underlying reason the patient is not providing more specific information")
+        goto(Projection1Goto)
+    }
+
+    onResponse<DenialBlock1> {
+        furhat.say(" Good guess. It is true the patient is denying having a problem, but what is critical is the way" +
+                " in which they are rejecting their issue. See if you can catch it in the next defense of a similar kind.")
+        goto(Projection1Goto)
+    }
+
+    onResponse<CoverWordBlock1> {
+        furhat.say(" Not really. Give it another try in the following defense of the same kind.")
+        goto(Projection1Goto)
+    }
+
+    onResponse<RationalizationBlock1> {
+        furhat.say(" This is a very good guess and correct in a sense. The patient is indeed providing reasons " +
+                "instead of feelings. Dig deeper into what reasons they are describing and see if you spot another principle" +
+                " at play in the following defense ")
+        goto(Projection1Goto)
+    }
+
+
+
 }
 
 val CoverWord1Goto : State = state {
