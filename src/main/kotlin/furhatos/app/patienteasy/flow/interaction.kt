@@ -478,6 +478,7 @@ val CoverWord1 : State = state {
         furhat.say(" Sensible guess. The patient does reason a bit about the cause of their emotions, which is a " +
                 " sign of rationalization. There is something more specific at play in this case however. Try again" +
                 " in the next defense of the same category.")
+        goto(CoverWord1Goto)
     }
 }
 
@@ -555,12 +556,14 @@ val Rationalization1 : State = state {
     onResponse<DenialBlock1> {
         furhat.say(" Not really. Notice the patient is rather open about having an issue. This indicates is's likely " +
                 " not a question of denial. Try again with the next defense of the same category.")
+        goto(Rationalization1Goto)
     }
 
     onResponse<ProjectionBlock1> {
         furhat.say(" Not quite. There may be some hints of projection since the patient is deflecting from their problem " +
                 "onto other matters. Try to spot exactly what the patient is doing instead of describing their feelings " +
                 " in this next similar defense.")
+        goto(Rationalization1Goto)
     }
 
     onResponse<CoverWordBlock1> {
