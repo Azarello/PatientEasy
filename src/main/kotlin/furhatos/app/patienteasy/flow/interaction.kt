@@ -41,9 +41,10 @@ val FirstModule : State = state {
                 " with. It is important for both patient and therapist to have a clear " +
                 " picture of the issue to start therapy. Patients are often reluctant to explicitly state their " +
                 "issue immediately, and use various defense mechanisms to avoid talking about the problem. ")
-        furhat.say("In this module you will learn to" +
-                " identify and block such defenses, in order to get the patient to more directly experience their emotions.  " +
-                "The module is complete once you have correctly identified and blocked five defenses, resulting in the " +
+        furhat.say("The defense mechanisms can be divided into different categories depending on their structure. " +
+                " In this module you will learn to" +
+                " identify different kinds defenses, which is the first step in learning to deal with them appropriately.  " +
+                "The module is complete once you have correctly identified five defenses, resulting in the " +
                 "patient clearly stating their problem. ")
         furhat.ask("Say continue if you are ready to start, or say repeat if you would like to hear the " +
                 "instructions again")
@@ -266,6 +267,31 @@ val Denial1 : State = state {
                 " problem. Either they don't want to mention what is causing it, or the troubling emotion itself. ")
         goto(DeclareProblem)
     }
+
+    onResponse<VagueBlock1> {
+        furhat.say(" Good guess, the patient is indeed not specific about their issue. However, there is another  " +
+                " way they are avoiding talking about the problem. See if you can catch it in the following similar defense")
+        goto(Denial1Goto)
+    }
+
+    onResponse<ProjectionBlock1> {
+        furhat.say(" Not really. The patient is not referencing others in their defense so it's not a question of" +
+                " projection.")
+        goto(Denial1Goto)
+    }
+
+    onResponse<CoverWordBlock1> {
+        furhat.say(" Nice try. The patient does use rather weak language and downplays the importance of their emotions. " +
+                " See if you can identify another defense mechanism that fits even better for this particular scenario")
+        goto(Denial1Goto)
+    }
+
+    onResponse<RationalizationBlock1> {
+        furhat.say(" Not bad. It may seem like the patient is rationalizing because they are dancing around the issue " +
+                " a bit. However, rationalization is when the patient provides reasons for their emotions rather than " +
+                " the feelings themselves, which the patient is not doing here. Try again with the next similar defense")
+        goto(Denial1Goto)
+    }
 }
 
 
@@ -428,6 +454,31 @@ val CoverWord1 : State = state {
                 " emotional content. Oftentimes patients may use unusual adjectives as covers so that's a good hint.")
         goto(DeclareProblem)
     }
+
+    onResponse<VagueBlock1> {
+        furhat.say(" Good guess, the patient is indeed vague about their issue. However they are avoiding their " +
+                "problem using a very specific defense. See if you can identify it in the next defense")
+        goto(CoverWord1Goto)
+    }
+
+    onResponse<DenialBlock1> {
+        furhat.say(" Not really. The patient is not denying that there is something troubling them so it is " +
+                " not a question of denial in this case. Try again with the next defense")
+        goto(CoverWord1Goto)
+    }
+
+    onResponse<ProjectionBlock1> {
+        furhat.say(" Good idea. The patient does mention other people which hints at projection. While the patient " +
+                " may be projecting they are also avoiding their emotions in a very particular way in this scenario. Try" +
+                " to spot it in the next similar defense")
+        goto(CoverWord1Goto)
+    }
+
+    onResponse<RationalizationBlock1> {
+        furhat.say(" Sensible guess. The patient does reason a bit about the cause of their emotions, which is a " +
+                " sign of rationalization. There is something more specific at play in this case however. Try again" +
+                " in the next defense of the same category.")
+    }
 }
 
 
@@ -492,6 +543,30 @@ val Rationalization1 : State = state {
     onResponse<GiveAnswer> {
         furhat.say("It was rationalization. Whenever patients provide reasons for their problem rather than" +
                 " talking directly about their emotions they may be rationalizing. ")
+    }
+
+    onResponse<VagueBlock1> {
+        furhat.say(" A reasonable guess. The patient is not very specific about their issue which is indeed vague. " +
+                " However, in what way are they avoiding being direct about there issue? See if you can identify it " +
+                " in the next defense")
+        goto(Rationalization1Goto)
+    }
+
+    onResponse<DenialBlock1> {
+        furhat.say(" Not really. Notice the patient is rather open about having an issue. This indicates is's likely " +
+                " not a question of denial. Try again with the next defense of the same category.")
+    }
+
+    onResponse<ProjectionBlock1> {
+        furhat.say(" Not quite. There may be some hints of projection since the patient is deflecting from their problem " +
+                "onto other matters. Try to spot exactly what the patient is doing instead of describing their feelings " +
+                " in this next similar defense.")
+    }
+
+    onResponse<CoverWordBlock1> {
+        furhat.say(" Not really. Cover word suggests the patient is using weaker emotional words to hide their " +
+                " more intense feelings. This is not really the case here, give it another try.")
+        goto(Rationalization1Goto)
     }
 }
 
