@@ -10,6 +10,7 @@ import java.util.*
 val Start : State = state(Interaction) {
 
     onEntry {
+
         furhat.ask("Hello and welcome to this program, in which you will learn more about Intensive Short-Term " +
                 "Dynamic Psychotherapy. The first step in the therapeutic process, is to establish a conscious " +
                 "therapeutic alliance. The following program will guide you through different modules that train " +
@@ -22,7 +23,7 @@ val Start : State = state(Interaction) {
         goto(FirstModule)
     }
 
-    onResponse<No>{
+    onResponse<No> {
         furhat.say("Ok, restart me when you are ready to begin")
         goto(Idle)
     }
@@ -62,6 +63,12 @@ val FirstModule : State = state {
     }
 }
 
+val DeclareWait : State = state {
+    onTime(delay=1500) {
+        goto(DeclareProblem)
+    }
+}
+
 val DeclareProblem : State = state {
 
     val rand = Random()
@@ -97,7 +104,7 @@ val Counter1 : State = state {
 }
 val Wait1 : State = state {
 
-    onTime(delay=3000) {
+    onTime(delay=1500) {
         furhat.ask("When you are ready for the next defense, say next")
     }
 
@@ -170,7 +177,7 @@ val Vague1 : State = state {
         furhat.say("It was a vague defense. They can often be identified because they don't give a clear or" +
                 " specific explanation of a problem, but rather ambiguous and unclear references.  ")
         furhat.say(" Let's go to another defense")
-        goto(DeclareProblem)
+        goto(DeclareWait)
     }
 
     onResponse<DenialBlock1> {
@@ -267,7 +274,7 @@ val Denial1 : State = state {
         furhat.say("That was a denial. You can often identify it because the patient refuses to talk about their " +
                 " problem. Either they don't want to mention what is causing it, or the troubling emotion itself. ")
         furhat.say( "Now let's go to the next defense")
-        goto(DeclareProblem)
+        goto(DeclareWait)
     }
 
     onResponse<VagueBlock1> {
@@ -363,7 +370,7 @@ val Projection1 : State = state {
         furhat.say("That was a projection defense. Whenever the patient mentions other people and not their own feelings" +
                 " it is a good sign that they may be projecting.")
         furhat.say(" Let's try another defense. ")
-        goto(DeclareProblem)
+        goto(DeclareWait)
     }
 
     onResponse<VagueBlock1> {
@@ -430,7 +437,7 @@ val CoverWord1 : State = state {
                     "must be feeling something stronger since they are unlikely to seek therapy for slight annoyance.")
             2 -> furhat.say(" Cover word is exactly right. Blocking cover words can be done by illuminating the " +
                     "particular word to the patient and inviting them to share more of their emotions")
-            3 -> furhat.say(" Cover words can often be identified because they don't give weight enough to the " +
+            3 -> furhat.say(" Good job, cover words can often be identified because they don't give weight enough to the " +
                     "situation or seem contrived. The word disconcerted used in this example really sticks out.")
             4 -> furhat.say(" Like other defenses, cover words are used to distance the patient from their " +
                     "actual painful emotions. By inviting them to use more appropriate words they may feel more " +
@@ -456,7 +463,7 @@ val CoverWord1 : State = state {
         furhat.say("That was a cover word block. When identifying this defense, look for words that express weak" +
                 " emotional content. Oftentimes patients may use unusual adjectives as covers so that's a good hint.")
         furhat.say(" Prepare for the next defense coming up.")
-        goto(DeclareProblem)
+        goto(DeclareWait)
     }
 
     onResponse<VagueBlock1> {
@@ -549,7 +556,7 @@ val Rationalization1 : State = state {
         furhat.say("It was rationalization. Whenever patients provide reasons for their problem rather than" +
                 " talking directly about their emotions they may be rationalizing. ")
         furhat.say(" Try again with the next defense coming up")
-        goto(DeclareProblem)
+        goto(DeclareWait)
     }
 
     onResponse<VagueBlock1> {
