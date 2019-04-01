@@ -97,7 +97,7 @@ val Counter1 : State = state {
 }
 val Wait1 : State = state {
 
-    onEntry {
+    onTime(delay=3000) {
         furhat.ask("When you are ready for the next defense, say next")
     }
 
@@ -169,6 +169,7 @@ val Vague1 : State = state {
     onResponse<GiveAnswer> {
         furhat.say("It was a vague defense. They can often be identified because they don't give a clear or" +
                 " specific explanation of a problem, but rather ambiguous and unclear references.  ")
+        furhat.say(" Let's go to another defense")
         goto(DeclareProblem)
     }
 
@@ -265,6 +266,7 @@ val Denial1 : State = state {
     onResponse<GiveAnswer> {
         furhat.say("That was a denial. You can often identify it because the patient refuses to talk about their " +
                 " problem. Either they don't want to mention what is causing it, or the troubling emotion itself. ")
+        furhat.say( "Now let's go to the next defense")
         goto(DeclareProblem)
     }
 
@@ -360,6 +362,7 @@ val Projection1 : State = state {
     onResponse<GiveAnswer> {
         furhat.say("That was a projection defense. Whenever the patient mentions other people and not their own feelings" +
                 " it is a good sign that they may be projecting.")
+        furhat.say(" Let's try another defense. ")
         goto(DeclareProblem)
     }
 
@@ -452,6 +455,7 @@ val CoverWord1 : State = state {
     onResponse<GiveAnswer> {
         furhat.say("That was a cover word block. When identifying this defense, look for words that express weak" +
                 " emotional content. Oftentimes patients may use unusual adjectives as covers so that's a good hint.")
+        furhat.say(" Prepare for the next defense coming up.")
         goto(DeclareProblem)
     }
 
@@ -544,6 +548,8 @@ val Rationalization1 : State = state {
     onResponse<GiveAnswer> {
         furhat.say("It was rationalization. Whenever patients provide reasons for their problem rather than" +
                 " talking directly about their emotions they may be rationalizing. ")
+        furhat.say(" Try again with the next defense coming up")
+        goto(DeclareProblem)
     }
 
     onResponse<VagueBlock1> {
