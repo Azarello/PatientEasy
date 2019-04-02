@@ -44,7 +44,7 @@ val FirstModule : State = state {
                 "issue immediately, and use various defense mechanisms to avoid talking about the problem. ")
         furhat.say("The defense mechanisms can be divided into different categories depending on their structure. " +
                 " In this module you will learn to" +
-                " identify different kinds defenses, which is the first step in learning to deal with them appropriately.  " +
+                " identify different kinds of defenses, which is the first step in learning to deal with them appropriately.  " +
                 "The module is complete once you have correctly identified five defenses, resulting in the " +
                 "patient clearly stating their problem. ")
         furhat.ask("Say continue if you are ready to start, or say repeat if you would like to hear the " +
@@ -148,7 +148,7 @@ val Vague1 : State = state {
                     "of the problem, inhibiting the therapeutic process.")
             1 -> furhat.say("Great. A good way of blocking vagueness is by explaining to the patient " +
                     "how they are avoiding the issue and encouraging them to be more specific.")
-            2 -> furhat.say("Yes. Vague defenses can often by identified because the patient does not provide any " +
+            2 -> furhat.say("Yes. Vague defenses can often be identified because the patient does not provide any " +
                     "specific details about their problem. They paint with a wide brush without providing " +
                     "much information.")
             3 -> furhat.say("Exactly right. Expressions like “something” or “stuff going on” are indicators that " +
@@ -549,7 +549,8 @@ val Rationalization1 : State = state {
     }
 
     onResponse<TryAgain> {
-        furhat.say("Sure. Let's go with another defense, I'm sure you will get this one next time.")
+        furhat.say("Sure. Let's go with another defense, I'm sure you will get this one.")
+        goto(DeclareProblem)
     }
 
     onResponse<GiveAnswer> {
