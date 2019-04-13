@@ -636,6 +636,17 @@ val SecondModule : State = state {
 
 
 
+val Wait2 : State = state {
+
+    onTime(delay=1500) {
+        furhat.ask("When you are ready for the next defense, say next")
+    }
+
+    onResponse<Continue> {
+        goto(Counter2)
+    }
+}
+
 
 val DeclareWill : State = state {
 
@@ -669,6 +680,13 @@ val Counter2 : State = state {
         }
     }
 }
+
+val Projection2Goto : State = state {
+    onEntry {
+        goto(Projection2)
+    }
+}
+
 val Projection2 : State = state {
 
     val rand = Random()
@@ -713,12 +731,18 @@ val Projection2 : State = state {
                     "for their own sake?")
 
     }
-        goto(Counter2)
+        goto(Wait2)
+    }
+
+    onResponse<Hint> {
+        furhat.say(" Consider what the patient is talking about instead of their emotions. What kind of excuse are " +
+                " they making instead of diving into the issue?")
+        goto(Projection2Goto)
     }
 
     onResponse<TryAgain> {
-        furhat.say(" Let's try again")
-        goto(DeclareWill)
+        furhat.say(" Let's try another defense.")
+        goto(Wait2)
     }
 
     onResponse<GiveAnswer> {
@@ -768,18 +792,31 @@ val HypotheticalSpeech2 : State = state {
                     "patient is using hypothetical speech as a defense mechanism. Make this explicit and invite them" +
                     "to make a more decisive stand")
         }
-        goto(Counter2)
+        goto(Wait2)
+    }
+
+    onResponse<Hint> {
+        furhat.say(" Be attentive to the wording of the patient. Are they committing their intention to do" +
+                " therapy strongly and clearly?")
     }
 
     onResponse<TryAgain> {
         furhat.say(" Let's try again")
-        goto(DeclareWill) }
+        goto(Wait2) }
 
     onResponse<GiveAnswer> {
-        furhat.say(" That was hypothetical speech")
-        goto(DeclareWill)
+        furhat.say(" That was hypothetical speech. Notice how the patient talked with ambiguous terms in " +
+                " order to avoid a firm commitment.")
+        goto(Wait2)
     }
 }
+
+val Defiance2Goto : State = state {
+    onEntry {
+        goto(Defiance2)
+    }
+}
+
 
 val Defiance2 : State = state {
 
@@ -807,18 +844,42 @@ val Defiance2 : State = state {
         it.intent.avoid
         it.intent.problem
 
+        when (num) {
+            0 -> furhat.say(" Yes correct. When patients refuse to cooperate in the therapeutic process " +
+                    " this way it is called defiance.")
+            1 -> furhat.say("That's right. This is very similar to denial, only the patient is also refusing " +
+                    " to work on it.")
+            2 -> furhat.say(" Correct. This particularly aggressive type of denial, in which the patient flat" +
+                                 "  out refuses to cooperate, is called defiance.")
+            3 -> furhat.say(" Yes exactly")
+            4 -> furhat.say(" That's exactly right. Just like when patients can deny the existence of a problem, " +
+                    " patients can deny the will to do therapy.")
+
+        }
+
         furhat.say("Yes that was defiance")
-        goto(Counter2)
+        goto(Wait2)
+    }
+
+    onResponse<Hint> {
+        furhat.say(" Is the patient being cooperative? ")
+        goto(Defiance2Goto)
     }
 
     onResponse<TryAgain> {
         furhat.say(" Let's try again")
-        goto(DeclareWill)
+        goto(Wait2)
     }
 
     onResponse<GiveAnswer> {
         furhat.say(" That was defiance")
         goto(DeclareWill)
+    }
+}
+
+val Rumination2Goto : State = state {
+    onEntry {
+        goto(Rumination2)
     }
 }
 
@@ -854,11 +915,23 @@ val Rumination2 : State = state {
         when (num) {
             0-> furhat.say(" Yes this is rumination. One can identify it because the patient gets confused and " +
                     "starts talking in circles to avoid the concrete issue at hand.")
-            1 -> furhat.say(" Correct. ")
+            1 -> furhat.say(" Correct. The patient is mentioning many things, like brain chemistry and their doctor" +
+                    " instead of the issue. This is a good clue they are ruminating")
+            2 -> furhat.say(" Great job! As with other defenses, a good approach is to simply make the patient " +
+                    " aware of their unhelpful reaction and encourage them to be more direct.")
+            3 -> furhat.say(" That's right. Here the patient is expressing doubt about the process and an overall" +
+                    " uncertain quality. These are signs of rumination")
+            4 -> furhat.say(" Perfect. Not a super clear case of rumination, but what is important to notice is" +
+                    " that the patient is being indirect and talking in circles instead of clearly committing their" +
+                    " will to do therapy. ")
         }
 
-        furhat.say("Yes that was rumination")
-        goto(Counter2)
+        goto(Wait2)
+    }
+
+    onResponse<Hint> {
+        furhat.say(" Does the patient make sense? Are they being clear and direct in their communication?")
+        goto(Rumination2Goto)
     }
 
     onResponse<TryAgain> {
@@ -869,6 +942,12 @@ val Rumination2 : State = state {
     onResponse<GiveAnswer> {
         furhat.say(" That was rumination")
         goto(DeclareWill)
+    }
+}
+
+val Anxiety2Goto : State = state {
+    onEntry {
+        goto(Anxiety2)
     }
 }
 
@@ -890,8 +969,28 @@ val Anxiety2 : State = state {
     }
 
     onResponse<AnxietyBlock2> {
-        furhat.say("Yes I do feel anxious now that you mention it")
-        goto(Counter2)
+
+        when (num) {
+            0 -> furhat.say("Yes correct. If the patient mentions feeling weird or uncomfortable this is a sign" +
+                    " they are experiencing anxiety.")
+            1 -> furhat.say(" Good job. Anxiety is a rather different reaction than defenses since it mainly" +
+                    " involves bodily sensations that are unpleasant for the patient")
+            2 -> furhat.say(" Great. Headaches are another symptom of a rise in anxiety. In general, if the " +
+                    " patient is referring to any bodily discomfort this should be a good clue there is an onset of" +
+                    " anxiety.")
+            3 -> furhat.say(" Perfect. When patients experience anxiety, it is important to regulate it before" +
+                    " moving on to working on and blocking other defenses.")
+            4 -> furhat.say(" That's right. The bodily symptoms of the patients give away that they have anxiety. " +
+                    " As you get more experience, you may even be able to notice anxiety in the atient by being observant " +
+                    " of their body language and movements")
+            }
+            goto(Wait2)
+        }
+
+    onResponse<Hint> {
+        furhat.say(" Does this strike you as different than most defenses encountered so far? Notice what the patient" +
+                " is talking about and see what it may be a symptom of.")
+        goto(Anxiety2Goto)
     }
 
     onResponse<TryAgain> {
