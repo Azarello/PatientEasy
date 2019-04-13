@@ -875,6 +875,13 @@ val Defiance2 : State = state {
         furhat.say(" That was defiance")
         goto(DeclareWill)
     }
+
+    onResponse<DenialBlock1> {
+        furhat.say(" Very good guess. In a way the patient really is denying, but notice how the patient is directly " +
+                " opposing himself to the therapist and refusing to cooperate in the therapeutic process. Try again in" +
+                " the next defense of the same category. ")
+
+    }
 }
 
 val Rumination2Goto : State = state {
@@ -942,6 +949,12 @@ val Rumination2 : State = state {
     onResponse<GiveAnswer> {
         furhat.say(" That was rumination")
         goto(DeclareWill)
+    }
+
+    onResponse<VagueBlock1> {
+        furhat.say(" Very close. The answer is certainly vague. What makes this type of defense unique is how" +
+                " the patient is not even talking about the issue but is rather talking around it in circles. See" +
+                " if you can figure it out in the next defense of the same type. ")
     }
 }
 
