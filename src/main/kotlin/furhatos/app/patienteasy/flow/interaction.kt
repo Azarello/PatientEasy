@@ -735,7 +735,7 @@ val Projection2 : State = state {
     }
 
     onResponse<Hint> {
-        furhat.say(" Consider what the patient is talking about instead of their emotions. What kind of excuse are " +
+        furhat.say(" Consider what the patient is talking about to avoid their emotions. What kind of excuse are " +
                 " they making instead of diving into the issue?")
         goto(Projection2Goto)
     }
@@ -746,8 +746,43 @@ val Projection2 : State = state {
     }
 
     onResponse<GiveAnswer> {
-        furhat.say(" That was hypothetical speech")
-        goto(DeclareWill)
+        furhat.say(" That was projection, they are projecting their will to do therapy onto someone else. " +
+                "Notice how the patient brings up another person as wanting them to do" +
+                " therapy instead of committing by their own free will.")
+        goto(Wait2)
+    }
+
+    onResponse<HypotheticalSpeechBlock2> {
+        furhat.say(" Not quite. The patient is in a way distancing from commitment, but in this case they are not" +
+                " doing it by hypothesizing. See if you can discern the specific way in which they avoid commitment " +
+                " in the next similar defense.")
+        goto(Projection2Goto)
+    }
+
+    onResponse<DefianceBlock2> {
+        furhat.say(" Not so. Defiance implies a more direct refusal of participating in the therapeutic process. " +
+                " Try again with another defense.")
+        goto(Projection2Goto)
+
+    }
+
+    onResponse<RuminationBlock2> {
+        furhat.say(" No. In rumination the patient talks around in circles, while in this case the patient communicates" +
+                " rather clearly. Try again in the next defense of the same category.")
+        goto(Projection2Goto)
+    }
+
+    onResponse<AnxietyBlock2> {
+        furhat.say(" Incorrect. Keep in mind anxiety is a fundamentally different response from other defenses." +
+                " It often involves some uncomfortable bodily sensations on the part of the patient.")
+        goto(Projection2Goto)
+    }
+}
+
+
+val HypotheticalSpeech2Goto : State = state {
+    onEntry {
+        goto(HypotheticalSpeech2)
     }
 }
 
@@ -798,16 +833,42 @@ val HypotheticalSpeech2 : State = state {
     onResponse<Hint> {
         furhat.say(" Be attentive to the wording of the patient. Are they committing their intention to do" +
                 " therapy strongly and clearly?")
+        goto(Projection2Goto)
     }
 
     onResponse<TryAgain> {
-        furhat.say(" Let's try again")
+        furhat.say(" Let's try again with another defense.")
         goto(Wait2) }
 
     onResponse<GiveAnswer> {
-        furhat.say(" That was hypothetical speech. Notice how the patient talked with ambiguous terms in " +
+        furhat.say(" That was hypothetical speech. Notice how the patient talked in hypothetical and ambiguous terms in " +
                 " order to avoid a firm commitment.")
         goto(Wait2)
+    }
+
+    onResponse<ProjectionBlock2> {
+        furhat.say(" Not really. Since the patient is not bringing up other people in their defense, it is likely" +
+                " not a case of projecting. Try another defense of the same category")
+        goto(HypotheticalSpeech2Goto)
+    }
+
+    onResponse<DefianceBlock2> {
+        furhat.say(" Incorrect. The patient is actually being quite agreeable in this situation, which suggests" +
+                " they are not defying the process. Try again with the next similar defense. ")
+        goto(HypotheticalSpeech2Goto)
+    }
+
+    onResponse<RuminationBlock2> {
+        furhat.say(" Not quite. Though the response is rather ambiguous it is still rather short and concise. " +
+                " Generally rumination consists of longer and more incoherent responses. See if you can get it in the" +
+                " next defense of the same type.")
+        goto(HypotheticalSpeech2Goto)
+    }
+
+    onResponse<AnxietyBlock2> {
+        furhat.say(" Not correct. The patient is not disclosing any signs of bodily discomfort, which is the" +
+                " primary signal of anxiety. Try another similar defense.")
+        goto(HypotheticalSpeech2Goto)
     }
 }
 
@@ -942,19 +1003,25 @@ val Rumination2 : State = state {
     }
 
     onResponse<TryAgain> {
-        furhat.say(" Let's try again")
+        furhat.say(" Let's try again with another defense. I'm sure you will get this one")
         goto(DeclareWill)
     }
 
     onResponse<GiveAnswer> {
-        furhat.say(" That was rumination")
-        goto(DeclareWill)
+        furhat.say(" That was rumination. Notice how the patient rants in a rather incoherent way that is difficult " +
+                "to make sense of. This is generally a good sign of rumination.")
+        goto(Wait2)
     }
 
     onResponse<VagueBlock1> {
         furhat.say(" Very close. The answer is certainly vague. What makes this type of defense unique is how" +
                 " the patient is not even talking about the issue but is rather talking around it in circles. See" +
                 " if you can figure it out in the next defense of the same type. ")
+    }
+
+    onResponse<ProjectionBlock2> {
+        furhat.say(" Not quite. The patient may bring up other people, but this is an effect of the generally confusing" +
+                " character of their defense. See ")
     }
 }
 
