@@ -20,7 +20,7 @@ val Start : State = state(Interaction) {
     }
 
     onResponse<Continue>{
-        goto(FirstModule)
+        goto(SecondModule)
     }
 
     onResponse<No> {
@@ -607,7 +607,7 @@ val Resolution1 : State = state {
     }
 }
 
-val SecondModule1 : State = state {
+val SecondModuleGoto : State = state {
     onEntry {
         goto(SecondModule)
     }
@@ -617,12 +617,17 @@ val SecondModule1 : State = state {
 val SecondModule : State = state {
 
     onEntry {
-        furhat.ask("The second part of establishing the therapeutic alliance involves getting the patient " +
-                "to declare their will to do therapy. It is important to keep in mind that one should never explore" +
-                " a problem unless the patient first declares their wish to work on it in a therapeutic setting. In this " +
-                "module we will look at defenses that a patient may use to avoid expressing " +
-                "their will to do therapy. Your task is to identify and block five defenses in order to get the patient " +
-                "to declare their will to explore their problem with you. Are you ready?")
+        furhat.say("Welcome to this module, in which you will learn more about the second part of establishing a " +
+                " conscious therapeutic alliance. This step involves getting the patient to declare their will to do therapy. " +
+                "It is important to keep in mind that one should never explore a problem unless the patient first expresses " +
+                "their wish to work on it in a therapeutic setting.")
+        furhat.say("In this module we will look at defenses that a patient may use to avoid expressing " +
+                "their will to do therapy. Additionally you will encounter a new type of response, that of anxiety. " +
+                " For now, if the patient experiences anxiety, simply label it as you have other defenses. In later modules you will" +
+                " learn more specific skills for how to deal with it appropriately.")
+        furhat.ask(" Your task is to identify and block five responses in order to get the patient to explicitly " +
+                " declare their desire to do therapy." +
+                " Say start if you are ready or say repeat if you would like to to hear the instructions again.")
     }
 
     onResponse<Continue> {
@@ -630,7 +635,7 @@ val SecondModule : State = state {
     }
 
     onResponse<Repeat> {
-        goto(SecondModule1)
+        goto(SecondModuleGoto)
     }
 }
 
