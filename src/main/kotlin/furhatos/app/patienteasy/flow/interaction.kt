@@ -878,7 +878,6 @@ val Defiance2Goto : State = state {
     }
 }
 
-
 val Defiance2 : State = state {
 
     val rand = Random()
@@ -888,7 +887,7 @@ val Defiance2 : State = state {
         when (num) {
             0 -> furhat.ask("I don't think I want to work on my problem after all, it's not causing a lot " +
                     "of harm anyways ")
-            1 -> furhat.ask(" On closer thought the problem is not as important as I let on, I don't think we need " +
+            1 -> furhat.ask(" On closer thought the problem is not as important as I let on, I don't want  " +
                     "to go into it. ")
             2 -> furhat.ask(" I just don't want to deal with it ok")
             3 -> furhat.ask(" Why would I want to work on something that's not a problem. My life is overall fine")
@@ -908,13 +907,15 @@ val Defiance2 : State = state {
         when (num) {
             0 -> furhat.say(" Yes correct. When patients refuse to cooperate in the therapeutic process " +
                     " this way it is called defiance.")
-            1 -> furhat.say("That's right. This is very similar to denial, only the patient is also refusing " +
-                    " to work on it.")
+            1 -> furhat.say("That's right. This is very similar to denial, only the patient is more directly also refusing " +
+                    " to cooperate with the therapist.")
             2 -> furhat.say(" Correct. This particularly aggressive type of denial, in which the patient flat" +
-                                 "  out refuses to cooperate, is called defiance.")
-            3 -> furhat.say(" Yes exactly")
-            4 -> furhat.say(" That's exactly right. Just like when patients can deny the existence of a problem, " +
-                    " patients can deny the will to do therapy.")
+                    "  out refuses to establish an alliance, is called defiance.")
+            3 -> furhat.say(" Yes exactly. Similar to denial, defiance also implies the patient is actively opposing" +
+                    " himself to continuing with the process.")
+            4 -> furhat.say(" That's exactly right. Like with other defenses, when dealing with defiance it is" +
+                    " helpful make the patient aware of their response and ask if they really want to keep opposing" +
+                    " the process which would be helpful to them.")
 
         }
 
@@ -923,25 +924,52 @@ val Defiance2 : State = state {
     }
 
     onResponse<Hint> {
-        furhat.say(" Is the patient being cooperative? ")
+        furhat.say(" Is the patient being cooperative? Notice the  ")
         goto(Defiance2Goto)
     }
 
     onResponse<TryAgain> {
-        furhat.say(" Let's try again")
+        furhat.say(" Let's try another defense.")
         goto(Wait2)
     }
 
     onResponse<GiveAnswer> {
-        furhat.say(" That was defiance")
+        furhat.say(" That was defiance. Notice its similarity to denial and how the patient is actively refusing" +
+                " to cooperate in the therapeutic process by declaring they don't want to declare their will. ")
         goto(DeclareWill)
     }
 
     onResponse<DenialBlock1> {
-        furhat.say(" Very good guess. In a way the patient really is denying, but notice how the patient is directly " +
-                " opposing himself to the therapist and refusing to cooperate in the therapeutic process. Try again in" +
-                " the next defense of the same category. ")
+        furhat.say(" Very good guess. The patient really is denying, but notice how the patient is directly " +
+                " opposing himself to the therapist and refusing to cooperate in the therapeutic process. See if you can " +
+                " find an even more accurate label in the following defense of the same category. ")
+        goto(Defiance2Goto)
+    }
 
+    onResponse<ProjectionBlock2> {
+        furhat.say(" Not so. Since the patient is not mentioning other people in their defense, they are not projecting" +
+                " their will to do therapy onto someone else. Try again in this next similar defense")
+        goto(Defiance2Goto)
+    }
+
+    onResponse<HypotheticalSpeechBlock2> {
+        furhat.say(" Not really. Hypothetical speech implies the patient is being indirect or ambiguous in their way" +
+                " of speaking. In this case the patient is expressing himself very clearly and directly. Try again in" +
+                " another defense of the same category.")
+        goto(Defiance2Goto)
+    }
+
+    onResponse<RuminationBlock2> {
+        furhat.say("Incorrect. The patient is being very concise and direct in his response, as opposed to the" +
+                " incoherent rambling of rumination. Have another try in the next defense of the same type")
+        goto(Defiance2Goto)
+    }
+
+    onResponse<AnxietyBlock2> {
+        furhat.say(" Not quite. Anxiety is a fundamentally different response from most defenses, in that it expresses" +
+                " itself through uncomfortable feelings in the body that the patient cannot handle. Try another defense" +
+                " of the same kind")
+        goto(Defiance2Goto)
     }
 }
 
@@ -1021,7 +1049,29 @@ val Rumination2 : State = state {
 
     onResponse<ProjectionBlock2> {
         furhat.say(" Not quite. The patient may bring up other people, but this is an effect of the generally confusing" +
-                " character of their defense. See ")
+                " character of their defense. See if you can see the larger pattern in the next similar defense.")
+        goto(Rumination2Goto)
+    }
+
+    onResponse<HypotheticalSpeechBlock2> {
+        furhat.say(" Very good guess. The patient is indeed being indirect about their commitment. This particular " +
+                " defense has another important characteristic to it, relating to its length and incoherence. See if you " +
+                "can catch it with this next defense of the same category.")
+        goto(Rumination2Goto)
+    }
+
+    onResponse<DefianceBlock2> {
+        furhat.say(" Not quite. The patient is willing to partake in the therapeutic process, they are just no being" +
+                " clear and direct about it. Defiance implies they are outright refusing to cooperate. Try again" +
+                " with another defense of the same kind. ")
+    }
+
+    onResponse<AnxietyBlock2> {
+        furhat.say(" Not so. The incoherent character of their defense may suggest the patient is " +
+                " experiencing anxiety. Even though this is the case, one generally regulates anxiety when the patient" +
+                " expresses or shows signs of bodily discomfort they cannot deal with. Try again with another similar" +
+                " defense.")
+        goto(Rumination2Goto)
     }
 }
 
@@ -1074,13 +1124,40 @@ val Anxiety2 : State = state {
     }
 
     onResponse<TryAgain> {
-        furhat.say(" Let's try again")
+        furhat.say(" Let's try again with another defense.")
         goto(DeclareWill)
     }
 
     onResponse<GiveAnswer> {
-        furhat.say(" That was anxiety")
-        goto(DeclareWill)
+        furhat.say(" That was anxiety. Notice the different character of this response, in which the patient directly" +
+                " refers to uncomfortable feelings in the body.")
+        goto(Wait2)
+    }
+
+    onResponse<ProjectionBlock2> {
+        furhat.say(" Not so. The patient is not bringing up other people in their response, so it is not a case" +
+                " of projection. Have a go at another similar defense.")
+        goto(Anxiety2Goto)
+    }
+
+    onResponse<HypotheticalSpeechBlock2> {
+        furhat.say(" Incorrect. The patient is not being indirect in this case, in fact they are being quite " +
+                " clear about what they are experiencing. Try again with another defense of the same type. ")
+        goto(Anxiety2Goto)
+    }
+
+    onResponse<DefianceBlock2> {
+        furhat.say(" Not quite. The patient may seem like they are defying because they refuse to declare " +
+                " their will to do therapy. However, look closely at what exactly is preventing them from expressing their" +
+                " desire to get better. Try this in this next defense of the same category. ")
+        goto(Anxiety2Goto)
+    }
+
+    onResponse<RuminationBlock2> {
+        furhat.say(" Not really. It is true that the patient is avoiding declaring their will to do therapy by " +
+                " bringing up something else. But they are being rather clear about what is preventing them from" +
+                " doing this. See if you can catch it in the next defense of the same kind. ")
+        goto(Anxiety2Goto)
     }
 }
 
