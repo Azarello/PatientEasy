@@ -20,7 +20,7 @@ val Start : State = state(Interaction) {
     }
 
     onResponse<Continue>{
-        goto(SecondModule)
+        goto(FirstModule)
     }
 
     onResponse<No> {
