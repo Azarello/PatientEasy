@@ -1343,9 +1343,22 @@ val NoMemory3 : State = state {
         it.intent.problem
         it.intent.specific
 
-        furhat.say(" Yes, correct. No memory defenses are usually quite clear-cut as the patient explicitly states" +
-                " they cannot remember one way or another. It is, however, unlikely that a patient cannot remember a single" +
-                " event of something that is so emotionally salient")
+        when (num) {
+            0 -> furhat.say(" That's right. This is a rather explicit example of no memory since the patient clearly" +
+                    " states they cannot remember a particular instance of what is being asked about")
+            1 -> furhat.say(" Perfect. Even though the patient is not explicitly stating they cannot remember, they " +
+                    " are still hiding behind a poor memory excuse to avoid answering the question directly. ")
+            2 -> furhat.say(" Great job. A rather evident example of no memory considering the wording, 'I can't really" +
+                    " recall'. One way to deal with this is to encourage the patient to see if, after all, they can't " +
+                    " remember something important. ")
+            3 -> furhat.say(" Exactly so. It may be tempting to accept no memory defenses since it is possible for" +
+                    " people to simply forget. It is, however, rather unlikely that patients have no memory of such " +
+                    " emotionally salient events. ")
+            4 -> furhat.say(" That's correct. When dealing with no memory defenses it is wise to keep in mind that the" +
+                    " patient may genuinely not remember certain details. However, if they consistently 'cannot " +
+                    " remember' significant events, it may be a sign they are using it as a defense mechanism.")
+        }
+
         goto(Counter3)
     }
 
@@ -1398,7 +1411,11 @@ val Diversification3 : State = state {
     }
 
     onResponse<DiversificationBlock3> {
-        furhat.say(" Yes that's right. The patient")
+
+        when (num) {
+            0 -> furhat.say(" ")
+        }
+
     }
 }
 
