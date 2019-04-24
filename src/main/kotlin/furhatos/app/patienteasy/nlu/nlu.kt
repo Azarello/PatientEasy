@@ -813,3 +813,12 @@ class NoMemoryBlock3(val general : Generalize? = null, val memory : Memory? = nu
                 " bad memory")
     }
 }
+
+class DiversificationBlock3: Intent() {
+    override fun getExamples(lang: Language): List<String> {
+        return listOf(" Diversification",
+                "Diverse",
+                " You are diversification",
+                " You are changing topic")
+    }
+}

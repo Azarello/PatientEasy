@@ -187,7 +187,7 @@ val Vague1 : State = state {
     }
 
     onResponse<ProjectionBlock1> {
-        furhat.say(" Not quite. Keep in mind that just because a patient mentions another person does not necessarily " +
+        furhat.say(" Not quite. Keep in mind that just because a patient mentions another person it does not necessarily " +
                 " mean they are projecting. There may be other more distinct defense mechanisms at play. See if you can" +
                 " spot it in the next defense of the same category.")
         goto(Vague1Goto)
@@ -1183,6 +1183,19 @@ val Resolution2 : State = state {
 }
 
 
+
+val Wait3 : State = state {
+
+    onTime(delay=1500) {
+        furhat.ask("When you are ready for the next defense, say next")
+    }
+
+    onResponse<Continue> {
+        goto(Counter2)
+    }
+}
+
+
 val DeclareSpecific : State = state {
 
     val rand = Random()
@@ -1218,6 +1231,14 @@ val Counter3 : State = state {
 
 
 
+val Generalization3Goto : State = state {
+    onEntry {
+        goto(Generalization3)
+    }
+}
+
+
+
 val Generalization3 : State = state {
 
     val rand = Random()
@@ -1245,18 +1266,55 @@ val Generalization3 : State = state {
         it.intent.problem
         it.intent.specific
 
-        furhat.say("Yes that was generalization")
-        goto(Counter3)
+        when (num) {
+            0 -> furhat.say(" Yes that's correct. Notice how the patient is referring to an overall 'pattern' rather," +
+                    " than specifying a particular instance in which this pattern took place. ")
+            1 -> furhat.say(" Perfect. The patient does mention their feelings of frustration, which is good. " +
+                    " However, they talk about the feeling of frustration in a general sense rather than describing an " +
+                    " event that made them frustrated ")
+            2 -> furhat.say(" Great job, the patient is indeed being general. The phrase 'in many instances'  is " +
+                    " very telling that the patient is talking about a general trend rather than a specific situation")
+            3 -> furhat.say(" That's right. Another way patients can be general is by talking about their overall " +
+                    "personality or character instead of sharing a specific example when their problem showed up")
+            4 -> furhat.say(" Yes, this is generalization. Notice how the patient offers some valuable insight " +
+                    " about their situation, but none the less fails to re-tell a particular scenario, in which they " +
+                    " experienced emotional difficulty. ")
+        }
+
+            goto(Counter3)
     }
 
-    onResponse<Yes> {
-        furhat.say(" Let's try again")
-        goto(DeclareSpecific)
+
+
+    onResponse<NoMemoryBlock3> {
+        furhat.say(" Not quite. Lack of memory defenses are generally more explicit in that patients directly state " +
+                " they cannot remember. This is not really the case here, try again in the next defense of the same kind.")
+        goto(Generalization3Goto)
     }
 
-    onResponse<No> {
-        furhat.say(" That was Generalization")
-        goto(DeclareSpecific)
+    onResponse<DiversificationBlock3> {
+        furhat.say(" Good guess. It certainly seems like the patient is trying to change the topic in order to avoid " +
+                " providing a specific example. They are still, however, talking about the issue at large. See if you can" +
+                " spot the correct defense in this next example of the same category. ")
+        goto(Generalization3Goto)
+    }
+
+    onResponse<TryAgain> {
+        furhat.say(" Ok, let's try another defense. ")
+        goto(Wait3)
+    }
+
+    onResponse<GiveAnswer> {
+        furhat.say(" That was generalization. Notice how the patient is presenting a large or general account of the" +
+                " issue, using words like 'pattern', 'usually', or 'overall', instead of providing a specific instance of " +
+                " their problem")
+        goto(Wait3)
+    }
+}
+
+val NoMemory3Goto : State = state {
+    onEntry {
+        goto(NoMemory3)
     }
 }
 
@@ -1285,18 +1343,37 @@ val NoMemory3 : State = state {
         it.intent.problem
         it.intent.specific
 
-        furhat.say(" Yes, that was no memory")
+        furhat.say(" Yes, correct. No memory defenses are usually quite clear-cut as the patient explicitly states" +
+                " they cannot remember one way or another. It is, however, unlikely that a patient cannot remember a single" +
+                " event of something that is so emotionally salient")
         goto(Counter3)
     }
 
 
-    onResponse<Yes> {
-        furhat.say(" Let's try again")
-        goto(DeclareSpecific)
+    onResponse<GeneralizationBlock3> {
+        furhat.say(" Not quite. Generalization implies the patient is giving large and non-specific information. In " +
+                " this case the patient is also rather vague, but notice why specifically they are not providing a more " +
+                " detailed response. Try this in the next similar response")
+        goto(NoMemory3Goto)
     }
 
-    onResponse<No> {
-        furhat.say(" That was no memory")
+    onResponse<DiversificationBlock3> {
+        furhat.say(" Not really. The patient is perhaps slightly changing the topic, but really there is a more " +
+                " direct reason why they are not sharing a specific example of their problem. See if you can spot it " +
+                " in the next defense of the same kind.")
+        goto(NoMemory3Goto)
+    }
+
+    onResponse<TryAgain> {
+        furhat.say("Ok, let's try another defense")
+        goto(Wait3)
+    }
+
+    onResponse<GiveAnswer> {
+        furhat.say(" This is a case of a no memory response. Notice how the patient avoids describing an instance " +
+                "of their problem by saying they cannot remember one way or another. Of course patients may genuinely " +
+                " not remember certain things, but if they consistently cannot recall emotionally important events, it" +
+                " may be a hint they are using it as a defense mechanim.")
         goto(DeclareSpecific)
     }
 }
@@ -1318,6 +1395,10 @@ val Diversification3 : State = state {
             4 -> furhat.ask(" You make me feel like I do when my wife complains I don't do the dishes. Though " +
                     "she does have a point sometimes.")
         }
+    }
+
+    onResponse<DiversificationBlock3> {
+        furhat.say(" Yes that's right. The patient")
     }
 }
 
