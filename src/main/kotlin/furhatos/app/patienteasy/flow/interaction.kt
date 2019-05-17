@@ -1386,12 +1386,17 @@ val NoMemory3 : State = state {
         furhat.say(" This is a case of a no memory response. Notice how the patient avoids describing an instance " +
                 "of their problem by saying they cannot remember one way or another. Of course patients may genuinely " +
                 " not remember certain things, but if they consistently cannot recall emotionally important events, it" +
-                " may be a hint they are using it as a defense mechanim.")
+                " may be a hint they are using it as a defense mechanism.")
         goto(DeclareSpecific)
     }
 }
 
+val Diversification3Goto : State = state {
 
+    onEntry {
+        goto(Diversification3)
+    }
+}
 
 val Diversification3 : State = state {
 
@@ -1413,12 +1418,71 @@ val Diversification3 : State = state {
     onResponse<DiversificationBlock3> {
 
         when (num) {
-            0 -> furhat.say(" ")
+            0 -> furhat.say(" That's correct. Especially when the patient is changing the topic to something seemingly " +
+                    " related, as in this case, it is important to not get off track and immediately block the defense.")
+            1 -> furhat.say( "This is indeed diversification. Notice how the patient brings in a completely unrelated " +
+                    " topic in order to avoid sharing a specific example")
+            2 -> furhat.say(" Great job. In diversification, the patient attempts to avoid their feelings by " +
+                    " changing the topic. Block this by refocusing attention on the issue, at hand and avoid being " +
+                    " dragged into the story. ")
+            3 -> furhat.say(" Perfect. The patient is avoiding describing a specific instance of the problem by " +
+                    " telling an unrelated story about their father. It is fine to acknowledge this, but make sure to " +
+                    " get the process back on track without lingering on diverse topics.")
+            4 -> furhat.say(" That's right. Whenever the patient talks about something seemingly unrelated, such " +
+                    " as his wife and dishes, this is a good clue he is using diversification as a defense mechanism.")
         }
 
+        goto(Counter3)
+
+    }
+
+    onResponse<GeneralizationBlock3> {
+        furhat.say(" Good guess. Generalization implies the patient is talking about the issue at hand, just that he is  " +
+                " not being specific enough. Notice in the next defense if the patient is still talking about the same " +
+                " topic at all.")
+        goto(Diversification3Goto)
+    }
+
+    onResponse<NoMemoryBlock3> {
+        furhat.say(" Not quite. No memory defense suggests the person is seemingly struggling with remembering " +
+                " a specific instance. This was not the case in this defense, see if you can spot the correct one in " +
+                " the next defense of the same kind")
+    }
+
+    onResponse<TryAgain> {
+        furhat.say(" Ok, let's try another defense")
+        goto(Wait3)
+    }
+
+    onResponse<GiveAnswer> {
+        furhat.say(" This defense is diversification, which means the patient changes topics in order to avoid " +
+                " answering the question. You can usually tell it's diversification if the patient suddenly introduces " +
+                " something unrelated into the conversation")
     }
 }
 
+
+val Avoidance : State = state {
+
+    val rand = Random()
+    val num = rand.nextInt(5)
+
+    onEntry {
+        when (num) {
+            0 -> furhat.say(" I really don't want to think about that, it's very painful")
+            1 -> furhat.say(" I haven't thought of any incidents for a long time, and don't intend to think about " +
+                    " it now or again.")
+            2 -> furhat.say( "You are asking me to dive into my feelings? That's not what I want, I thought therapy " +
+                    "was supposed to make me happy and not go into negative emotions.")
+            3 -> furhat.say(" I'd really prefer not to think about it, it causes so many negative feelings that " +
+                    " I try to avoid.")
+            4 -> furhat.say( " I have been doing a good job of avoiding these thoughts and feelings, and don't see " +
+                    " a reason to go into them again.")
+        }
+    }
+
+
+}
 
 val Resolution3 : State = state {
 
