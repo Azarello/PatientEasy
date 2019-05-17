@@ -1462,7 +1462,14 @@ val Diversification3 : State = state {
 }
 
 
-val Avoidance : State = state {
+val Avoidance3Goto : State = state {
+    onEntry {
+        goto(Avoidance3)
+    }
+}
+
+
+val Avoidance3 : State = state {
 
     val rand = Random()
     val num = rand.nextInt(5)
@@ -1480,6 +1487,34 @@ val Avoidance : State = state {
                     " a reason to go into them again.")
         }
     }
+
+    onResponse<AvoidanceBlock3> {
+
+        it.intent.avoid
+        it.intent.feel
+
+        when (num) {
+            0 -> furhat.say(" That's right. The patient admits they prefer not to think about their painful feelings  " +
+                    " which is a case of avoidance. However, the way to progress through therapy is to explore theses " +
+                    " feelings even if they are temporarily painful")
+            1 -> furhat.say(" Correct. When patients openly express that they are unwilling to explore their feelings, " +
+                    " it is a good sign they are in a state of avoidance.")
+            2 -> furhat.say(" Great job. When blocking avoidance, it is good to explain to patients that " +
+                    " it is necessary to overcome their fear of exploring painful feelings in order to get better. ")
+            3 -> furhat.say(" Exactly right. The patient even uses the word 'avoid' in this case. In general with" +
+                    " avoidance, it is helpful to provide a safe environment in which they feel brave enough to explore" +
+                    " feelings they usually avoid")
+            4 -> furhat.say(" Perfect. In fact, all defenses are a type of avoidance. What signifies this defense is that " +
+                    " patients openly admit to, and are consciously aware of their avoiding behavior. ")
+        }
+
+        goto(Counter3)
+    }
+
+    onResponse<GeneralizationBlock3> {
+        furhat.say("Not quite. ")
+    }
+
 
 
 }

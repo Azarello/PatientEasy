@@ -77,7 +77,7 @@ class Intellectual : EnumEntity(stemming = true, speechRecPhrases = true) {
 class Avoid : EnumEntity(stemming = true, speechRecPhrases = true) {
     override fun getEnum(lang: Language): List<String> {
         return listOf("avoid", "avoiding", "avoided", "evading", "evade", "evaded", "vague", "vagueness",
-                "avert", "averted", "averting", "dodge", "dodging", "dodged", "escape", "escaped", "escaping")
+                "avert", "averted", "averting", "dodge", "dodging", "dodged", "escape", "escaped", "escaping", "avoidance")
     }
 }
 
@@ -820,5 +820,16 @@ class DiversificationBlock3: Intent() {
                 "Diverse",
                 " You are diversification",
                 " You are changing topic")
+    }
+}
+
+class AvoidanceBlock3(val feel : Feel? = null, val avoid : Avoid? = null) : Intent() {
+    override fun getExamples(lang: Language): List<String> {
+        return listOf(" Avoidance",
+                "Avoid",
+                " @avoid",
+                " You are @avoid",
+                " That is @avoid",
+                " You are @avoid your feel")
     }
 }
