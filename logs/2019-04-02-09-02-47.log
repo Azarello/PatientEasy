@@ -1,0 +1,3 @@
+09:02:47 [Skill] INFO  Skill:137 - Connecting to Furhat server on 192.168.1.3:1932
+09:02:48 [PatienteasySkill] INFO  PatienteasySkill:171 - Starting skill
+09:07:02 [Broker Client] ERROR BrokerClient:154 - Unexpected disconnect from broker
