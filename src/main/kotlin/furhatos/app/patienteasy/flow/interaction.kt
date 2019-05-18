@@ -1449,6 +1449,12 @@ val Diversification3 : State = state {
                 " the next defense of the same kind")
     }
 
+    onResponse<AvoidanceBlock3> {
+        furhat.say(" Very good guess. The patient is certainly avoiding the topic by not providing a specific example" +
+                " of their problem. In avoidance, however, the patient is consciously aware of avoiding their emotions. " +
+                " In the next defense, in what way is the patient avoiding the therapeutic process?")
+    }
+
     onResponse<TryAgain> {
         furhat.say(" Ok, let's try another defense")
         goto(Wait3)
@@ -1459,6 +1465,8 @@ val Diversification3 : State = state {
                 " answering the question. You can usually tell it's diversification if the patient suddenly introduces " +
                 " something unrelated into the conversation")
     }
+
+
 }
 
 
@@ -1479,11 +1487,11 @@ val Avoidance3 : State = state {
             0 -> furhat.say(" I really don't want to think about that, it's very painful")
             1 -> furhat.say(" I haven't thought of any incidents for a long time, and don't intend to think about " +
                     " it now or again.")
-            2 -> furhat.say( "You are asking me to dive into my feelings? That's not what I want, I thought therapy " +
+            2 -> furhat.say("You are asking me to dive into my feelings? That's not what I want, I thought therapy " +
                     "was supposed to make me happy and not go into negative emotions.")
             3 -> furhat.say(" I'd really prefer not to think about it, it causes so many negative feelings that " +
                     " I try to avoid.")
-            4 -> furhat.say( " I have been doing a good job of avoiding these thoughts and feelings, and don't see " +
+            4 -> furhat.say(" I have been doing a good job of avoiding these thoughts and feelings, and don't see " +
                     " a reason to go into them again.")
         }
     }
@@ -1512,12 +1520,93 @@ val Avoidance3 : State = state {
     }
 
     onResponse<GeneralizationBlock3> {
-        furhat.say("Not quite. ")
+        furhat.say("Not quite. When patients generalize, they still talk about their issue but do so in an indirect " +
+                " and general sense. In this example the patient completely evades the topic, try again in the next defense" +
+                " in the same category.")
+        goto(Avoidance3Goto)
     }
 
+    onResponse<NoMemoryBlock3> {
+        furhat.say(" Good guess. The patient is indeed failing to provide a concrete instance of their issue, but " +
+                " in this case they are not blaming their lack of memory. See if you can spot the reason they don't " +
+                " declare a specific example in the next defense of the same kind")
+        goto(Avoidance3Goto)
+    }
 
+    onResponse<DiversificationBlock3> {
+        furhat.say(" Not bad, but not quite right. In diversification the patient completely changes the topic " +
+                " in order to confront their emotions. In this case the patient does evade the topic, but they are being " +
+                " more direct about how they do it. Try again in this next defense")
+        goto(Avoidance3Goto)
+    }
 
+    onResponse<TryAgain> {
+        furhat.say(" Ok, let's try another defense")
+        goto(Wait3)
+    }
+
+    onResponse<GiveAnswer> {
+        furhat.say(" This defense is avoidance. Though all defenses are ultimately a form of avoidance, in these cases" +
+                " the patients are consciously aware that they are avoiding their problem. It is helpful to remind them" +
+                " how this strategy has not served them in the past, and that they need to confront their emotions in " +
+                " order to improve. ")
+    }
 }
+
+
+
+val Intellectualization3 : State = state {
+
+    val rand = Random()
+    val num = rand.nextInt(5)
+
+    onEntry {
+        when (num) {
+            0 -> furhat.say(" Last time it happened, I remember thinking how we really need to find a solution" +
+                    " to this problem")
+            1 -> furhat.say(" Sometimes when it happens, I try to use techniques from books about how to calm down, " +
+                    " but it does not really work in the moment, you know. ")
+            2 -> furhat.say(" Maybe if I had more emotional intelligence I would be able to handle those types" +
+                    " of situations better, but I suppose I have to deal with what I have.")
+            3 -> furhat.say( " It happened one time last weekend, and I remember being really on edge that day. And" +
+                    " when I'm on edge I am less able to deal with confrontation. So there is that.")
+            4 -> furhat.say(" A specific situation you say? How is that supposed to help? I mean, I have read " +
+                    " that I need to deal with my childhood issues in order to solve problems like these.")
+        }
+
+    }
+
+    onResponse<IntellecutalizationBlock3> {
+        when (num) {
+            0 -> furhat.say(" Great job. In intellectualization, the patient offers thoughts instead of feelings. " +
+                    " Instead of describing the situation or their emotions, they share their thoughts on the matter.")
+            1 -> furhat.say(" Perfect. In this case the patient starts talking about their thoughts and strategies" +
+                    " of dealing with the situation, instead of simply describing the situation and their feelings about it.")
+            2 -> furhat.say(" That's correct. The word 'if' is generally a good sign the patient is intellectualizing, " +
+                    " since it is commonly followed by some sort of hypothetical thought pattern. ")
+            3 -> furhat.say (" That's right. When blocking intellectualization, don't go along with the thoughts the " +
+                    " patients offer. Gently make them aware of their defense and redirect their attention to what the " +
+                    " theraputic process demands")
+            4 -> furhat.say(" Indeed it is intellectualization. In this case, the patient is thinking about the " +
+                    " grander scheme of therapy instead of the specific problem. However, they are still offering thoughts" +
+                    " instead of feelings, which is the hallmark of intellectualization.")
+        }
+        goto(Counter3)
+    }
+
+    onResponse<RationalizationBlock1> {
+        furhat.say(" Great guess. Rationalization and intellectualization are sometimes used interchangeably and " +
+                " are very easy to confuse. Technically, in rationalization, patients attempt to justify their actions " +
+                " rather than talk about how they felt. In intellectualization, patients focus on the rational side of " +
+                " the problem instead of the emotion, offering thoughts instead of emotions. This subtle difference will" +
+                " be explored in more detail in future modules")
+    }
+}
+
+
+
+
+
 
 val Resolution3 : State = state {
 

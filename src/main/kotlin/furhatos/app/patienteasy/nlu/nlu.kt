@@ -833,3 +833,13 @@ class AvoidanceBlock3(val feel : Feel? = null, val avoid : Avoid? = null) : Inte
                 " You are @avoid your feel")
     }
 }
+
+class IntellecutalizationBlock3(val intellectual : Intellectual? = null) : Intent () {
+    override fun getExamples(lang: Language): List<String> {
+        return listOf( " Intellectual",
+                "@intellectual",
+                " Intellect",
+                " You are intellectual",
+                " you are @intellectual")
+    }
+}
