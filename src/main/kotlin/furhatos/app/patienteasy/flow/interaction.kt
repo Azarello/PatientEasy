@@ -1206,7 +1206,8 @@ val DeclareSpecific : State = state {
             0 -> goto(Generalization3)
             1 -> goto(NoMemory3)
             2 -> goto(Diversification3)
-            else -> goto(Idle)
+            3 -> goto(Avoidance3)
+            4 -> goto(Intellectualization3)
         }
     }
 }
@@ -1299,6 +1300,20 @@ val Generalization3 : State = state {
         goto(Generalization3Goto)
     }
 
+    onResponse<AvoidanceBlock3> {
+        furhat.say(" Not really. In avoidance, the patient is rather aware of their strategy and mention it explicitly." +
+                " In this case the patient is doing something a bit more subtle, try to catch in the coming defense of " +
+                " a similar kind")
+        goto(Generalization3Goto)
+    }
+
+    onResponse<IntellecutalizationBlock3> {
+        furhat.say(" Good idea, but not quite right. It is true the patient is distancing themselves by " +
+                " thinking about larger patterns rather than specifics. But this kind of distancing is a particular " +
+                " defense mechanism, see if you can remember it in relation to this next defense.")
+        goto(Generalization3Goto)
+    }
+
     onResponse<TryAgain> {
         furhat.say(" Ok, let's try another defense. ")
         goto(Wait3)
@@ -1310,6 +1325,13 @@ val Generalization3 : State = state {
                 " their problem")
         goto(Wait3)
     }
+
+    onResponse<Hint> {
+        furhat.say(" Is the patient being specific about their response? Notice how instead of giving a particular " +
+                " instance, they turn it into something larger. What defense mechanism follows this pattern?")
+        goto(Generalization3Goto)
+    }
+
 }
 
 val NoMemory3Goto : State = state {
@@ -1377,6 +1399,10 @@ val NoMemory3 : State = state {
         goto(NoMemory3Goto)
     }
 
+    onResponse<AvoidanceBlock3> {
+        furhat.say(" ")
+    }
+
     onResponse<TryAgain> {
         furhat.say("Ok, let's try another defense")
         goto(Wait3)
@@ -1388,6 +1414,11 @@ val NoMemory3 : State = state {
                 " not remember certain things, but if they consistently cannot recall emotionally important events, it" +
                 " may be a hint they are using it as a defense mechanism.")
         goto(DeclareSpecific)
+    }
+
+    onResponse<Hint> {
+        furhat.say(" What excuse is the patient using to not describe a particular instance of their problem? If " +
+                " you listen closely, the patient is being rather direct about why they fail to provide you with this information.")
     }
 }
 
@@ -1464,6 +1495,12 @@ val Diversification3 : State = state {
         furhat.say(" This defense is diversification, which means the patient changes topics in order to avoid " +
                 " answering the question. You can usually tell it's diversification if the patient suddenly introduces " +
                 " something unrelated into the conversation")
+    }
+
+    onResponse<Hint> {
+        furhat.say(" The patient is reaching quite far to avoid mentioning a specific instance. What are they talking" +
+                " about instead? Is it related at all to the topic at hand?")
+        goto(Diversification3Goto)
     }
 
 
@@ -1551,9 +1588,20 @@ val Avoidance3 : State = state {
                 " how this strategy has not served them in the past, and that they need to confront their emotions in " +
                 " order to improve. ")
     }
+
+    onResponse<Hint> {
+        furhat.say( " Notice that the patient seems rather aware of how they are evading their feelings and do it" +
+                " quite consciously. This is distinctly different from other defense mechanisms, in which patients are " +
+                " often unaware of their pattern. ")
+        goto(Avoidance3Goto)
+    }
 }
 
-
+val Intellectualization3Goto : State = state {
+    onEntry {
+        goto(Intellectualization3)
+    }
+}
 
 val Intellectualization3 : State = state {
 
@@ -1600,6 +1648,55 @@ val Intellectualization3 : State = state {
                 " rather than talk about how they felt. In intellectualization, patients focus on the rational side of " +
                 " the problem instead of the emotion, offering thoughts instead of emotions. This subtle difference will" +
                 " be explored in more detail in future modules")
+        goto(Intellectualization3Goto)
+    }
+
+    onResponse<GeneralizationBlock3> {
+        furhat.say(" Good guess. The patient is in a way generalizing by abstracting away from describing a specific" +
+                " instance of their issue, but the key part is noticing what the patient talks about instead of offering " +
+                " a specific scenario. Try catching it in the next defense of the same kind")
+        goto(Intellectualization3Goto)
+    }
+
+    onResponse<NoMemoryBlock3> {
+        furhat.say(" Not quite. In no memory blocks, the patient rather explicitly makes it clear that they cannot " +
+                " remember about what you are asking. This is not quite the case here. Try again, and pay attention to " +
+                " what the patient mentions instead of offering their emotions")
+        goto(Intellectualization3Goto)
+    }
+
+    onResponse<DiversificationBlock3> {
+        furhat.say(" Not bad. In a way the patient is changing the topic, but notice in what way they are avoiding " +
+                " talking about a specific instance. Diversification suggests a rather abrupt change in topic, to what" +
+                " is the patient switching attention to in this case?")
+        goto(Intellectualization3Goto)
+    }
+
+    onResponse<AvoidanceBlock3> {
+        furhat.say( " Nice try. The patient is indeed avoiding your inquiry, but the avoidance defense implies that " +
+                " the patient is aware of avoiding the issue and makes it rather explicit. In this case, the patient " +
+                " avoids describing a specific scenario in a more subtle way, try again in this next defense.")
+        goto(Intellectualization3Goto)
+    }
+
+    onResponse<TryAgain> {
+        furhat.say(" Ok, let's try another defense")
+        goto(Wait3)
+    }
+
+    onResponse<GiveAnswer> {
+        furhat.say(" This defense is intellectualization. In intellecualization the patient offers their thoughts" +
+                " instead of their emotions. Notice how when asked about a specific scenario made them feel, they instead " +
+                " mention their ideas and thoughts about it.Whenever patients mention ideas over feelings it is a good " +
+                " sign they may be intellecutalizing.")
+        goto(Wait3)
+    }
+
+    onResponse<Hint> {
+        furhat.say(" Consider what kind of information the patient is giving you instead of describing a specific" +
+                " instance of the problem, and how it made them feel. Are they centered in emotions or are they providing " +
+                " you with another kind of information?")
+        goto(Intellectualization3Goto)
     }
 }
 
