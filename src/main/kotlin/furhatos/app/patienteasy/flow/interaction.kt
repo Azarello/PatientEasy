@@ -1191,7 +1191,7 @@ val Wait3 : State = state {
     }
 
     onResponse<Continue> {
-        goto(Counter2)
+        goto(Counter3)
     }
 }
 
@@ -1400,7 +1400,17 @@ val NoMemory3 : State = state {
     }
 
     onResponse<AvoidanceBlock3> {
-        furhat.say(" ")
+        furhat.say(" Good guess, but not quite right. The patient is indeed rather clear about why they are not" +
+                " describing a specific scenario, and seem to be aware of it. However, there is a specific reason they" +
+                " are unable to provide you with the information, which gives you a clue as to what defense mechanism" +
+                " it is. ")
+        goto(NoMemory3Goto)
+    }
+
+    onResponse<IntellecutalizationBlock3> {
+        furhat.say(" Not so. In intellectualization, patients offer thoughts instead of feelings. In this defense, the" +
+                " patient does not provide much information at all. Why is that the case? ")
+        goto(NoMemory3Goto)
     }
 
     onResponse<TryAgain> {
@@ -1419,6 +1429,7 @@ val NoMemory3 : State = state {
     onResponse<Hint> {
         furhat.say(" What excuse is the patient using to not describe a particular instance of their problem? If " +
                 " you listen closely, the patient is being rather direct about why they fail to provide you with this information.")
+        goto(NoMemory3Goto)
     }
 }
 
@@ -1486,6 +1497,12 @@ val Diversification3 : State = state {
                 " In the next defense, in what way is the patient avoiding the therapeutic process?")
     }
 
+    onResponse<IntellecutalizationBlock3> {
+        furhat.say(" Nice try. It is true the patient is mentioning thoughts in a way, but what are the thoughts" +
+                " about? Are they related to the issue at hand?")
+        goto(Diversification3Goto)
+    }
+
     onResponse<TryAgain> {
         furhat.say(" Ok, let's try another defense")
         goto(Wait3)
@@ -1495,6 +1512,7 @@ val Diversification3 : State = state {
         furhat.say(" This defense is diversification, which means the patient changes topics in order to avoid " +
                 " answering the question. You can usually tell it's diversification if the patient suddenly introduces " +
                 " something unrelated into the conversation")
+        goto(Wait3)
     }
 
     onResponse<Hint> {
@@ -1587,6 +1605,7 @@ val Avoidance3 : State = state {
                 " the patients are consciously aware that they are avoiding their problem. It is helpful to remind them" +
                 " how this strategy has not served them in the past, and that they need to confront their emotions in " +
                 " order to improve. ")
+        goto(DeclareSpecific)
     }
 
     onResponse<Hint> {
@@ -1689,7 +1708,7 @@ val Intellectualization3 : State = state {
                 " instead of their emotions. Notice how when asked about a specific scenario made them feel, they instead " +
                 " mention their ideas and thoughts about it.Whenever patients mention ideas over feelings it is a good " +
                 " sign they may be intellecutalizing.")
-        goto(Wait3)
+        goto(DeclareSpecific)
     }
 
     onResponse<Hint> {
@@ -1708,17 +1727,12 @@ val Intellectualization3 : State = state {
 val Resolution3 : State = state {
 
     onEntry {
-        furhat.say("Great, you got through the third part! Would you like to continue to the next section")
+        furhat.say("Great! You helped patient to declare a specific instance in which their problem manifested. " +
+                " Turns out they got angry with their father in relation to talking about their mother's illness. This" +
+                " is exactly the type of valuable information that describing a particular instance may yield, and helps" +
+                " progress the therapeutic process. How exactly to do this will be the topic of future modules")
     }
 }
 
 
 
-
-/* onResponse<Yes> {
-     goto(DeclareSpecific)
- }
-
- onResponse<No> {
-     goto(Idle)
- } */
